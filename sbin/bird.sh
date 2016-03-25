@@ -23,6 +23,7 @@ bird_init() {
 }
 
 bird_start() {
+	bird
 }
 
 # Add BGP peer
