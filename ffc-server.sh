@@ -32,6 +32,7 @@ ffc_stop() {
 	fastd_stop
 	gre_stop
 	batman_stop
+	bird_stop
 }
 
 # Perform status check
