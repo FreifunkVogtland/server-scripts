@@ -23,7 +23,7 @@ gre_add_tunnel() {
 	local ipR2=$(echo $2 | awk -F '.' '{print $4}')
 	ip link add $1 type gretap remote $2 local $WANIP ttl 255
 	ip addr add 169.254.${ipL1}.${ipL2} peer 169.254.${ipR1}.${ipR2}/32 scope link dev $1
-	ip link set mtu 1400 up dev $1
+	ip link set mtu 1426 up dev $1
 }
 
 # Remove GRE tunnel
