@@ -6,16 +6,6 @@ gre_init() {
 	fi
 }
 
-# Get peer hostnames
-gre_get_peers() {
-	if [ ${#GRE_PEERS[@]} -gt 0 ]; then
-    	local peers=$GRE_PEERS
-    	echo "${peers[*]}"
-	else
-		log_fatal_error "Missing GRE_PEERS - please check configuration!"
-	fi
-}
-
 # Get running GRE interface names
 gre_get_running_ifnames() {
 	local running_ifnames=$(grep "gre-" /proc/net/dev | sed -e "s/:.*//g")
@@ -55,8 +45,10 @@ gre_check_tunnel() {
 
 # Build GRE tunnels to remote backbone servers
 gre_add_all_tunnels() {
-	peers=$(gre_get_peers)
-	for p in "${peers[@]}"; do
+	if [ ! ${#GRE_PEERS[@]} -gt 0 ]; then
+		log_fatal_error "Missing GRE_PEERS - please check configuration!"
+	fi
+	for p in "${GRE_PEERS[@]}"; do
 		remoteHost=$(echo $p | awk -F ':' '{print $1}')
 		remoteIP=$(echo $p | awk -F ':' '{print $2}')
 		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
