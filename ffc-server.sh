@@ -20,7 +20,10 @@ ffc_start() {
 		batman_add_interface "$i"
 	done
 	
-	fastd_init
+	if [ "$USE_FASTD" = "1" ]; then
+		fastd_init
+		fastd_start
+	fi
 }
 
 # Destroy network
