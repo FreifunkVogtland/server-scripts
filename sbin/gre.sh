@@ -57,12 +57,12 @@ gre_check_tunnel() {
 gre_add_all_tunnels() {
 	peers=$(gre_get_peers)
 	for p in "${peers[@]}"; do
-		remoteHost=$(echo $p | awk -F ':' '{$1}')
-		remoteIP=$(echo $p | awk -F ':' '{$2}')
+		remoteHost=$(echo $p | awk -F ':' '{print $1}')
+		remoteIP=$(echo $p | awk -F ':' '{print $2}')
 		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
 			# Do not add ourselves as a peer
 			if [ "$remoteIP" != "$WANIP" ]; then
-				add_tunnel "gre-${remoteHost}" "$remoteIP"
+				gre_add_tunnel "gre-${remoteHost}" "$remoteIP"
 			fi
 		else
 			log_error "Syntax error in peer definition: ${p}"

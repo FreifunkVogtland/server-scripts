@@ -6,7 +6,7 @@ log_error() {
 }
 
 log_fatal_error() {
-	echo "[ERROR] $1"
+	echo "[ERROR] $1" >&2
 	log_error "$1"
 	exit 1
 }
