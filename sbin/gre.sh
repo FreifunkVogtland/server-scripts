@@ -35,7 +35,7 @@ gre_del_tunnel() {
 	ip link delete $1 >> /dev/null 2>&1
 }
 
-# Add GRE tunnels to all backbone servers
+# Add GRE tunnels to remote backbone servers
 gre_add_all_tunnels() {
 	gre_get_peers
 	for p in $PEERS; do
@@ -48,7 +48,7 @@ gre_add_all_tunnels() {
 	done
 }
 
-# Remove all GRE tunnels
+# Remove all running GRE tunnels
 gre_del_all_tunnels() {
 	gre_get_running_ifnames
 	for i in $RUNNING_IFNAMES; do
