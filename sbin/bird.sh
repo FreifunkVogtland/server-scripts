@@ -35,5 +35,5 @@ bird_add_peer() {
 	sed -e "s/__BIRD_REMOTE_HOST__/$1/g" \
 		-e "s/__BIRD_REMOTE_IP__/169.254.${ipR1}.${ipR2}/g" \
 		-e "s/__BIRD_REMOTE_ASN__/${ipR1}${ipR2}/g" \
-		"conf/bird.conf" >> "conf/bird.local.conf"
+		"conf/bird-peers.conf" >> "conf/bird-peers.local.conf"
 }
