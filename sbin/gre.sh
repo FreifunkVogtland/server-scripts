@@ -66,6 +66,6 @@ gre_add_all_tunnels() {
 gre_del_all_tunnels() {
 	running_ifnames=$(gre_get_running_ifnames)
 	for i in $running_ifnames; do
-		gre_del_tunnel "${i}"
+		gre_del_tunnel "$i"
 	done
 }
