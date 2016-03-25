@@ -7,7 +7,7 @@ fastd_init() {
 }
 
 fastd_start() {
-	fastd -d -c "conf/fastd.conf"
+	fastd -d -c conf/fastd.conf
 }
 
 fastd_stop() {

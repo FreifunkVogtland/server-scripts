@@ -7,7 +7,7 @@ bird_init() {
 		-e "s/__BIRD_ROUTER_ASN__/${ipL1}${ipL2}/g" \
 		conf/bird.conf > conf/bird.local.conf
 	
-	echo "" > conf/bird-peers.local.conf
+	echo -n "" > conf/bird-peers.local.conf
 	for p in "${GRE_PEERS[@]}"; do
 		remoteHost=$(echo $p | awk -F ':' '{print $1}')
 		remoteIP=$(echo $p | awk -F ':' '{print $2}')
@@ -23,7 +23,11 @@ bird_init() {
 }
 
 bird_start() {
-	bird
+	bird -c conf/bird.local.conf
+}
+
+bird_stop() {
+	killall bird >> /dev/null 2>&1
 }
 
 # Add BGP peer
