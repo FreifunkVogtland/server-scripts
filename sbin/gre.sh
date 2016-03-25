@@ -11,7 +11,7 @@ gre_get_peers() {
 }
 
 # Get running GRE interface names
-gre_get_running_ifs() {
+gre_get_running_ifnames() {
 	export RUNNING_IFNAMES=$(grep "gre-" /proc/net/dev | sed -e "s/:.*//g")
 }
 
@@ -50,5 +50,8 @@ gre_add_all_tunnels() {
 
 # Remove all GRE tunnels
 gre_del_all_tunnels() {
-	for p in $RUNNING_PEERS
+	gre_get_running_ifnames
+	for i in $RUNNING_IFNAMES; do
+		gre_del_tunnel "${i}"
+	done
 }
