@@ -42,6 +42,13 @@ ffc_stop() {
 	batman_stop
 	bird_stop
 	dnsmasq_stop
+	
+	while [ 1 ]; do
+		ip rule delete lookup 100 >> /dev/null 2>&1
+		if [ $? -gt 0 ]; then
+			break
+		fi
+	done
 }
 
 # Perform status check

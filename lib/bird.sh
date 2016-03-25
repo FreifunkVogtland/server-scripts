@@ -28,6 +28,7 @@ bird_init() {
 }
 
 bird_start() {
+	mkdir /run/bird
 	bird -c conf/bird.local.conf
 }
 
