@@ -4,6 +4,7 @@ batman_init() {
 	modprobe batman-adv
 	modprobe dummy
 	batctl interface add dummy0
+	batctl gw_mode client
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
 }
