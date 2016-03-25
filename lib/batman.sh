@@ -6,6 +6,7 @@ batman_init() {
 	batctl interface add dummy0
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
+	alfred -m -i bat0 &> /dev/null &
 }
 
 # Add interface to batman-adv
@@ -28,5 +29,6 @@ batman_setup_addresses() {
 }
 
 batman_stop() {
+	killall alfred >> /dev/null 2>&1
 	rmmod batman-adv >> /dev/null 2>&1
 }

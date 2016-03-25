@@ -16,6 +16,7 @@ ffc_start() {
 	batman_init
 	[ "$USE_FASTD" = "1" ] && fastd_init
 	[ "$USE_BIRD" = "1" ] && bird_init
+	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	
 	gre_add_all_tunnels
 	
@@ -27,6 +28,7 @@ ffc_start() {
 	
 	[ "$USE_FASTD" = "1" ] && fastd_start
 	[ "$USE_BIRD" = "1" ] && bird_start
+	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 }
 
 # Destroy network
@@ -35,6 +37,7 @@ ffc_stop() {
 	gre_stop
 	batman_stop
 	bird_stop
+	dnsmasq_stop
 }
 
 # Perform status check
