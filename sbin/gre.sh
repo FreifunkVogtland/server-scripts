@@ -1,18 +1,25 @@
 #!/bin/bash
 
 gre_init() {
-	export WANIF=$(ip route show default | grep ^default | sed -e "s/.*dev //g")
-	export WANIP=$(ip address show dev $WANIF | grep -e "inet .* scope global" | awk '{print $2}' | sed -e "s/\/.*//g")
+	if [ ! "$WANIF"] || [ ! "$WANIP" ]; then
+		log_fatal_error "Missing WANIF or WANIP - please check configuration!"
+	fi
 }
 
 # Get peer hostnames from TXT record
 gre_get_peers() {
-	export PEERS=$(dig -t TXT backbone.routers.chemnitz.freifunk.net +short)
+    if [[ "$(declare -p $GRE_PEERS 2>/dev/null)" =~ "declare -a" ]]; then
+    	local peers=$GRE_PEERS
+    	echo "$peers"
+	else
+		log_fatal_error "Missing GRE_PEERS - please check configuration!"
+	fi
 }
 
 # Get running GRE interface names
 gre_get_running_ifnames() {
-	export RUNNING_IFNAMES=$(grep "gre-" /proc/net/dev | sed -e "s/:.*//g")
+	local running_ifnames=$(grep "gre-" /proc/net/dev | sed -e "s/:.*//g")
+	echo "$running_ifnames"
 }
 
 # Add GRE tunnel
@@ -20,10 +27,10 @@ gre_get_running_ifnames() {
 # 	$2		Peer IPv4 address
 gre_add_tunnel() {
 	gre_init
-	ipL1=$(echo $WANIP | awk -F '.' '{print $3}')
-	ipL2=$(echo $WANIP | awk -F '.' '{print $4}')
-	ipR1=$(echo $2 | awk -F '.' '{print $3}')
-	ipR2=$(echo $2 | awk -F '.' '{print $4}')
+	local ipL1=$(echo $WANIP | awk -F '.' '{print $3}')
+	local ipL2=$(echo $WANIP | awk -F '.' '{print $4}')
+	local ipR1=$(echo $2 | awk -F '.' '{print $3}')
+	local ipR2=$(echo $2 | awk -F '.' '{print $4}')
 	ip link add $1 type gretap remote $2 local $WANIP ttl 255
 	ip addr add 169.254.${ipL1}.${ipL2} peer 169.254.${ipR1}.${ipR2}/32 scope link dev $1
 	ip link set mtu 1400 up dev $1
@@ -35,23 +42,38 @@ gre_del_tunnel() {
 	ip link delete $1 >> /dev/null 2>&1
 }
 
-# Add GRE tunnels to remote backbone servers
+# Checks if GRE tunnel is still alive
+#	$1		Interface name
+gre_check_tunnel() {
+	local result=false
+	local pingCheck=$(ping6 -c3 -i1 ff02::2%${1} | grep -c DUP)
+	if [ $pingCheck -gt 0 ]; then
+		result=true
+	fi
+	echo "$result"
+}
+
+# Build GRE tunnels to remote backbone servers
 gre_add_all_tunnels() {
-	gre_get_peers
-	for p in $PEERS; do
-		remoteIP=$(dig -t A ${p}.routers.chemnitz.freifunk.net +short)
-		if [ "$remoteIP" ]; then
-			add_tunnel "gre-${p}" "$remoteIP"
+	peers=$(gre_get_peers)
+	for p in "${peers[@]}"; do
+		remoteHost=$(echo $p | awk -F ':' '{$1}')
+		remoteIP=$(echo $p | awk -F ':' '{$2}')
+		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
+			# Do not add ourselves as a peer
+			if [ "$remoteIP" != "$WANIP" ]; then
+				add_tunnel "gre-${remoteHost}" "$remoteIP"
+			fi
 		else
-			log_error "No such peer: ${p}"
+			log_error "Syntax error in peer definition: ${p}"
 		fi
 	done
 }
 
 # Remove all running GRE tunnels
 gre_del_all_tunnels() {
-	gre_get_running_ifnames
-	for i in $RUNNING_IFNAMES; do
+	running_ifnames=$(gre_get_running_ifnames)
+	for i in $running_ifnames; do
 		gre_del_tunnel "${i}"
 	done
 }
