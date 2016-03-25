@@ -20,6 +20,11 @@ bird_init() {
 			log_error "Syntax error in peer definition: ${p}"
 		fi
 	done
+	
+	echo -n "" > conf/bird-routes.local.conf
+	for a in "${SERVICE_ADDRESSES[@]}"; do
+		bird_add_route "$a"
+	done
 }
 
 bird_start() {
@@ -40,4 +45,11 @@ bird_add_peer() {
 		-e "s/__BIRD_REMOTE_IP__/169.254.${ipR1}.${ipR2}/g" \
 		-e "s/__BIRD_REMOTE_ASN__/${ipR1}${ipR2}/g" \
 		conf/bird-peers.conf >> conf/bird-peers.local.conf
+}
+
+# Add BGP route
+# 	$1		Route
+bird_add_route() {
+	sed -e "s/__BIRD_ROUTE__/$1/g" \
+		conf/bird-routes.conf >> conf/bird-routes.local.conf
 }

@@ -4,10 +4,8 @@ batman_init() {
 	modprobe batman-adv
 	modprobe dummy
 	batctl interface add dummy0
-	batctl gw_mode client
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
-	ip link set up dev bat0
 }
 
 # Add interface to batman-adv
@@ -20,6 +18,13 @@ batman_add_interface() {
 #	$1		Interface name
 batman_del_interface() {
 	batctl interface del $1 >> /dev/null 2>&1
+}
+
+batman_setup_addresses() {
+	for a in "${SERVICE_ADDRESSES[@]}"; do
+		ip addr add $a dev bat0
+	done
+	ip link set up dev bat0
 }
 
 batman_stop() {
