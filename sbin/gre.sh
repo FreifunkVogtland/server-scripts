@@ -35,10 +35,10 @@ gre_del_tunnel() {
 # Checks if GRE tunnel is still alive
 #	$1		Interface name
 gre_check_tunnel() {
-	local result=false
+	local result=0
 	local pingCheck=$(ping6 -c3 -i1 ff02::2%${1} | grep -c DUP)
 	if [ $pingCheck -gt 0 ]; then
-		result=true
+		result=1
 	fi
 	echo "$result"
 }
@@ -63,7 +63,7 @@ gre_add_all_tunnels() {
 }
 
 # Remove all running GRE tunnels
-gre_del_all_tunnels() {
+gre_stop() {
 	running_ifnames=$(gre_get_running_ifnames)
 	for i in $running_ifnames; do
 		gre_del_tunnel "$i"

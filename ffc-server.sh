@@ -13,9 +13,8 @@
 ffc_start() {
 	gre_init
 	batman_init
-	if [ "$USE_FASTD" = "1" ]; then
-		fastd_init
-	fi
+	[ "$USE_FASTD" = "1" ] && fastd_init
+	[ "$USE_BIRD" = "1" ] && bird_init
 	
 	gre_add_all_tunnels
 	
@@ -24,21 +23,32 @@ ffc_start() {
 		batman_add_interface "$i"
 	done
 	
-	if [ "$USE_FASTD" = "1" ]; then
-		fastd_start
-	fi
+	[ "$USE_FASTD" = "1" ] && fastd_start
+	[ "$USE_BIRD" = "1" ] && bird_start
 }
 
 # Destroy network
 ffc_stop() {
-	gre_del_all_tunnels
+	fastd_stop
+	gre_stop
+	batman_stop
+}
+
+# Perform status check
+ffc_watchdog() {
+	local running_ifnames=$(gre_get_running_ifnames)
+	for i in $running_ifnames; do
+		if [ $(gre_check_tunnel "$i") = 0 ]; then
+			log_warn "GRE tunnel seems down: $i"
+		fi
+	done
 }
 
 case $1 in
 	start) ffc_start ;;
 	stop) ffc_stop ;;
-	status) ffc_status ;;
-	*) echo "Usage: start | stop" ;;
+	watchdog) ffc_watchdog ;;
+	*) echo "Usage: start | stop | watchdog" ;;
 esac
 
 exit 0

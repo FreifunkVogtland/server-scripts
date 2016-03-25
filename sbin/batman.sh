@@ -19,3 +19,7 @@ batman_add_interface() {
 batman_del_interface() {
 	batctl interface del $1 >> /dev/null 2>&1
 }
+
+batman_stop() {
+	rmmod batman-adv
+}
