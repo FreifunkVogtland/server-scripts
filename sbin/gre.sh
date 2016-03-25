@@ -10,7 +10,7 @@ gre_init() {
 gre_get_peers() {
 	if [ ${#GRE_PEERS[@]} -gt 0 ]; then
     	local peers=$GRE_PEERS
-    	echo "$peers"
+    	echo "${peers[*]}"
 	else
 		log_fatal_error "Missing GRE_PEERS - please check configuration!"
 	fi
