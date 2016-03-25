@@ -3,11 +3,12 @@
 . conf/general.conf
 . conf/general.local.conf
 
-. sbin/log.sh
-. sbin/gre.sh
-. sbin/batman.sh
-. sbin/fastd.sh
-. sbin/bird.sh
+. lib/log.sh
+. lib/gre.sh
+. lib/batman.sh
+. lib/fastd.sh
+. lib/bird.sh
+. lib/dnsmasq.sh
 
 # Set up network
 ffc_start() {
