@@ -29,7 +29,9 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_start
 	[ "$USE_BIRD" = "1" ] && bird_start
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
-	
+
+	ip rule add from 10.149.0.0/16 lookup 100
+	ip rule add to 10.149.0.0/16 lookup 100	
 	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
 
