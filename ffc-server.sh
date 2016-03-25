@@ -12,16 +12,19 @@
 # Set up network
 ffc_start() {
 	gre_init
+	batman_init
+	if [ "$USE_FASTD" = "1" ]; then
+		fastd_init
+	fi
+	
 	gre_add_all_tunnels
 	
-	batman_init
 	local running_ifnames=$(gre_get_running_ifnames)
 	for i in $running_ifnames; do
 		batman_add_interface "$i"
 	done
 	
 	if [ "$USE_FASTD" = "1" ]; then
-		fastd_init
 		fastd_start
 	fi
 }
