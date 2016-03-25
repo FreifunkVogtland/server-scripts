@@ -7,6 +7,7 @@ batman_init() {
 	batctl gw_mode client
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
+	ip link set up dev bat0
 }
 
 # Add interface to batman-adv
