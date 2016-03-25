@@ -21,5 +21,5 @@ batman_del_interface() {
 }
 
 batman_stop() {
-	rmmod batman-adv
+	rmmod batman-adv >> /dev/null 2>&1
 }

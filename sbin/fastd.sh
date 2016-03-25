@@ -11,5 +11,5 @@ fastd_start() {
 }
 
 fastd_stop() {
-	killall fastd
+	killall fastd >> /dev/null 2>&1
 }
