@@ -29,6 +29,8 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_start
 	[ "$USE_BIRD" = "1" ] && bird_start
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
+	
+	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
 
 # Destroy network
