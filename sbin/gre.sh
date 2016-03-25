@@ -1,14 +1,14 @@
 #!/bin/bash
 
 gre_init() {
-	if [ ! "$WANIF"] || [ ! "$WANIP" ]; then
+	if [ ! "$WANIF" ] || [ ! "$WANIP" ]; then
 		log_fatal_error "Missing WANIF or WANIP - please check configuration!"
 	fi
 }
 
-# Get peer hostnames from TXT record
+# Get peer hostnames
 gre_get_peers() {
-    if [[ "$(declare -p $GRE_PEERS 2>/dev/null)" =~ "declare -a" ]]; then
+	if [ ${#GRE_PEERS[@]} -gt 0 ]; then
     	local peers=$GRE_PEERS
     	echo "$peers"
 	else
