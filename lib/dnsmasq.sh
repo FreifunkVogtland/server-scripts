@@ -1,6 +1,9 @@
 #!/bin/bash
 
 dnsmasq_init() {
+	if [ ! "${SERVICE_ADDRESSES[0]}" ]; then
+		log_fatal_error "Missing DHCP service address - please check configuration!"
+	fi
 	sed -e "s/__DNSMASQ_SERVICE_IP__/${SERVICE_ADDRESSES[0]}/g" \
 		conf/dnsmasq.conf > conf/dnsmasq.local.conf
 }
