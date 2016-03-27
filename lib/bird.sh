@@ -23,7 +23,7 @@ bird_init() {
 	
 	echo -n "" > conf/bird-routes.local.conf
 	for a in "${SERVICE_ADDRESSES[@]}"; do
-		if [ $(bird_check_route "$a") = 1 ] && bird_add_route "$a"
+		[ $(bird_check_route "$a") = 1 ] && bird_add_route "$a"
 	done
 }
 
