@@ -9,6 +9,7 @@
 . lib/fastd.sh
 . lib/bird.sh
 . lib/dnsmasq.sh
+. lib/vpn03.sh
 
 # Set up network
 ffc_start() {
@@ -17,6 +18,7 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_init
 	[ "$USE_BIRD" = "1" ] && bird_init
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
+	[ "$USE_VPN03" = "1" ] && vpn03_init
 	
 	gre_add_all_tunnels
 	
@@ -29,6 +31,7 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_start
 	[ "$USE_BIRD" = "1" ] && bird_start
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
+	[ "$USE_VPN03" = "1" ] && vpn03_start
 
 	ip rule add from 10.149.0.0/16 lookup 100
 	ip rule add to 10.149.0.0/16 lookup 100	
@@ -42,6 +45,7 @@ ffc_stop() {
 	batman_stop
 	bird_stop
 	dnsmasq_stop
+	vpn03_stop
 	
 	while [ 1 ]; do
 		ip rule delete lookup 100 >> /dev/null 2>&1
