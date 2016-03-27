@@ -59,6 +59,6 @@ bird_add_peer() {
 # Add BGP route
 # 	$1		Route
 bird_add_route() {
-	sed -e "s|__BIRD_ROUTE__|$route|g" \
+	sed -e "s|__BIRD_ROUTE__|$1|g" \
 		conf/bird-routes.conf >> conf/bird-routes.local.conf
 }
