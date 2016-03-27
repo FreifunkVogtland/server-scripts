@@ -23,7 +23,7 @@ bird_init() {
 	
 	echo -n "" > conf/bird-routes.local.conf
 	for a in "${SERVICE_ADDRESSES[@]}"; do
-		if [ $(bird_check_route "$a") -gt 0 ]; then
+		if [ "$(bird_check_route "$a")" ]; then
 			bird_add_route "$a"
 		fi
 	done
@@ -32,7 +32,7 @@ bird_init() {
 # Check if address is an IP route
 #	$1		IPv4 address
 bird_check_route() {
-	[[ "$1" =~ .*/[0-9]+ ]] && echo 1
+	[[ "$1" =~ .*/[0-9]+ ]] && echo "1"
 }
 
 bird_start() {
@@ -59,6 +59,7 @@ bird_add_peer() {
 # Add BGP route
 # 	$1		Route
 bird_add_route() {
-	sed -e "s/__BIRD_ROUTE__/$1\/32/g" \
+	local $route=$(echo "$1" | sed -e "")
+	sed -e "s|__BIRD_ROUTE__|$route|g" \
 		conf/bird-routes.conf >> conf/bird-routes.local.conf
 }
