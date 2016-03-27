@@ -23,8 +23,14 @@ bird_init() {
 	
 	echo -n "" > conf/bird-routes.local.conf
 	for a in "${SERVICE_ADDRESSES[@]}"; do
-		bird_add_route "$a"
+		if [ $(bird_check_route "$a") = 1 ] && bird_add_route "$a"
 	done
+}
+
+# Check if address is an IP route
+#	$1		IPv4 address
+bird_check_route() {
+	[[ "$1" =~ .*/[0-9]+ ]] && echo "1"
 }
 
 bird_start() {

@@ -24,7 +24,7 @@ ffc_start() {
 	for i in $running_ifnames; do
 		batman_add_interface "$i"
 	done
-	batman_setup_addresses
+	batman_setup_interface
 	
 	[ "$USE_FASTD" = "1" ] && fastd_start
 	[ "$USE_BIRD" = "1" ] && bird_start

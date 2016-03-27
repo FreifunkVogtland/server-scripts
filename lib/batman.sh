@@ -22,7 +22,7 @@ batman_del_interface() {
 	batctl interface del $1 >> /dev/null 2>&1
 }
 
-batman_setup_addresses() {
+batman_setup_interface() {
 	for a in "${SERVICE_ADDRESSES[@]}"; do
 		ip addr add $a dev bat0
 	done
