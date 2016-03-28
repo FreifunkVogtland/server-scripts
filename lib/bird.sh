@@ -27,6 +27,9 @@ bird_init() {
 			bird_add_route "$a"
 		fi
 	done
+	
+	ip rule add from 10.149.0.0/16 lookup 100
+	ip rule add to 10.149.0.0/16 lookup 100
 }
 
 # Check if address is an IP route

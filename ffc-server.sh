@@ -35,9 +35,7 @@ ffc_start() {
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 	[ "$USE_RADVD" = "1" ] && radvd_start
 	[ "$USE_VPN03" = "1" ] && vpn03_start
-
-	ip rule add from 10.149.0.0/16 lookup 100
-	ip rule add to 10.149.0.0/16 lookup 100	
+		
 	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
 
