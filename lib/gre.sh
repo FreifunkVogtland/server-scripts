@@ -35,12 +35,8 @@ gre_del_tunnel() {
 # Checks if GRE tunnel is still alive
 #	$1		Interface name
 gre_check_tunnel() {
-	local result=0
 	local pingCheck=$(ping6 -c3 -i1 ff02::2%${1} | grep -c DUP)
-	if [ $pingCheck -gt 0 ]; then
-		result=1
-	fi
-	echo "$result"
+	[ $pingCheck -gt 0 ] && echo "1"
 }
 
 # Build GRE tunnels to remote backbone servers

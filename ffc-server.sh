@@ -9,6 +9,7 @@
 . lib/fastd.sh
 . lib/bird.sh
 . lib/dnsmasq.sh
+. lib/radvd.sh
 . lib/vpn03.sh
 
 # Set up network
@@ -18,6 +19,7 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_init
 	[ "$USE_BIRD" = "1" ] && bird_init
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
+	[ "$USE_RADVD" = "1" ] && radvd_init
 	[ "$USE_VPN03" = "1" ] && vpn03_init
 	
 	gre_add_all_tunnels
@@ -31,6 +33,7 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_start
 	[ "$USE_BIRD" = "1" ] && bird_start
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
+	[ "$USE_RADVD" = "1" ] && radvd_start
 	[ "$USE_VPN03" = "1" ] && vpn03_start
 
 	ip rule add from 10.149.0.0/16 lookup 100
@@ -45,6 +48,7 @@ ffc_stop() {
 	batman_stop
 	bird_stop
 	dnsmasq_stop
+	radvd_stop
 	vpn03_stop
 	
 	while [ 1 ]; do
@@ -59,7 +63,7 @@ ffc_stop() {
 ffc_watchdog() {
 	local running_ifnames=$(gre_get_running_ifnames)
 	for i in $running_ifnames; do
-		if [ $(gre_check_tunnel "$i") = 0 ]; then
+		if [ ! "$(gre_check_tunnel "$i")" ]; then
 			log_warn "GRE tunnel seems down: $i"
 		fi
 	done
