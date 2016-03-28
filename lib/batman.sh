@@ -7,7 +7,6 @@ batman_init() {
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
 	[ "$USE_DNSMASQ" = "1" ] && batctl gw_mode server
-	alfred -m -i bat0 &> /dev/null &
 }
 
 # Add interface to batman-adv
@@ -27,6 +26,7 @@ batman_setup_interface() {
 		[ "$a" ] && ip addr add $a dev bat0
 	done
 	ip link set up dev bat0
+	alfred -m -i bat0 &> /dev/null &
 }
 
 batman_stop() {
