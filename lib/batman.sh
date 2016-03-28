@@ -24,7 +24,7 @@ batman_del_interface() {
 
 batman_setup_interface() {
 	for a in "${SERVICE_ADDRESSES[@]}"; do
-		ip addr add $a dev bat0
+		[[ "$a" =~ ^[0-9.]+$ ]] && ip addr add $a/32 dev bat0
 	done
 	ip link set up dev bat0
 }

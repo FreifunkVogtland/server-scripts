@@ -6,7 +6,7 @@ radvd_init() {
 }
 
 radvd_start() {
-	radvd
+	radvd -C conf/radvd.conf
 }
 
 radvd_stop() {
