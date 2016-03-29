@@ -35,7 +35,7 @@ gre_del_tunnel() {
 # Checks if GRE tunnel is still alive
 #	$1		Interface name
 gre_check_tunnel() {
-	local pingCheck=$(ping6 -c3 -i1 ff02::2%${1} | grep -c DUP)
+	local pingCheck=$(ping6 -c5 -i1 ff02::2%${1} | grep -c DUP)
 	[ $pingCheck -gt 0 ] && echo "1"
 }
 
@@ -54,6 +54,16 @@ gre_add_all_tunnels() {
 			fi
 		else
 			log_error "Syntax error in peer definition: ${p}"
+		fi
+	done
+}
+
+# Called by watchdog
+gre_cron() {
+	local running_ifnames=$(gre_get_running_ifnames)
+	for i in $running_ifnames; do
+		if [ ! "$(gre_check_tunnel "$i")" ]; then
+			log_warn "GRE tunnel seems down: $i"
 		fi
 	done
 }

@@ -30,6 +30,5 @@ batman_setup_interface() {
 }
 
 batman_stop() {
-	killall alfred >> /dev/null 2>&1
 	rmmod batman-adv >> /dev/null 2>&1
 }

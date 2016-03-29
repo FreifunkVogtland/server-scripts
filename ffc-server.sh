@@ -22,7 +22,7 @@ ffc_start() {
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	[ "$USE_RADVD" = "1" ] && radvd_init
 	[ "$USE_VPN03" = "1" ] && vpn03_init
-	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_init
+	meshviewer_init
 	
 	gre_add_all_tunnels
 	
@@ -37,7 +37,6 @@ ffc_start() {
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 	[ "$USE_RADVD" = "1" ] && radvd_start
 	[ "$USE_VPN03" = "1" ] && vpn03_start
-	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_start
 	
 	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
@@ -61,14 +60,17 @@ ffc_stop() {
 	done
 }
 
-# Perform status check
+# Run every minute by cron.d
 ffc_watchdog() {
-	local running_ifnames=$(gre_get_running_ifnames)
-	for i in $running_ifnames; do
-		if [ ! "$(gre_check_tunnel "$i")" ]; then
-			log_warn "GRE tunnel seems down: $i"
-		fi
-	done
+	local cronTime=$(date +%s)
+	
+	# every minute
+	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_cron
+	
+	# every 5 minutes
+	if [ $(($timestamp%300)) -lt 10 ]; then
+		gre_cron
+	fi
 }
 
 case $1 in
