@@ -63,7 +63,7 @@ gre_cron() {
 	local running_ifnames=$(gre_get_running_ifnames)
 	for i in $running_ifnames; do
 		if [ ! "$(gre_check_tunnel "$i")" ]; then
-			log_warn "GRE tunnel seems down: $i"
+			log_error "GRE tunnel seems down: $i"
 		fi
 	done
 }

@@ -62,6 +62,7 @@ ffc_stop() {
 
 # Run every minute by cron.d
 ffc_watchdog() {
+	export IS_CRON="1"
 	local cronTime=$(date +%s)
 	
 	# every minute
