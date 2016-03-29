@@ -27,6 +27,10 @@ batman_setup_interface() {
 	for a in "${SERVICE_ADDRESSES[@]}"; do
 		[ "$a" ] && ip addr add $a dev bat0
 	done
+	
+	if [ "$USE_MESHVIEWER" != "1" ]; then
+		alfred -i bat0 &> /dev/null &
+	fi
 }
 
 batman_stop() {

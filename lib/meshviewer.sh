@@ -3,10 +3,7 @@
 meshviewer_init() {
 	if [ "$USE_MESHVIEWER" = "1" ]; then
 		alfred -m -i bat0 &> /dev/null &
-	else
-		# Always initialize servers as an ALFRED slave
-		alfred -i bat0 &> /dev/null &
-	fi	
+	fi
 }
 
 # Called by watchdog
