@@ -2,6 +2,7 @@
 
 meshviewer_init() {
 	if [ "$USE_MESHVIEWER" = "1" ]; then
+		sleep 2
 		alfred -m -i bat0 &> /dev/null &
 	fi
 }

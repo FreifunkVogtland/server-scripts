@@ -29,6 +29,7 @@ batman_setup_interface() {
 	done
 	
 	if [ "$USE_MESHVIEWER" != "1" ]; then
+		sleep 2
 		alfred -i bat0 &> /dev/null &
 	fi
 }
