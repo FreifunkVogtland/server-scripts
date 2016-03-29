@@ -68,7 +68,7 @@ ffc_watchdog() {
 	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_cron
 	
 	# every 5 minutes
-	if [ $(($timestamp%300)) -lt 10 ]; then
+	if [ $(($cronTime%300)) -lt 10 ]; then
 		gre_cron
 	fi
 }
