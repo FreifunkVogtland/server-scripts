@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PATH=$PATH:/usr/local/sbin/
+
 . conf/general.conf
 . conf/general.local.conf
 
