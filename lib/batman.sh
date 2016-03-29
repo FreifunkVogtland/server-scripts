@@ -22,11 +22,11 @@ batman_del_interface() {
 }
 
 batman_setup_interface() {
+	local macAddress=$(sed -e "s/^[0-9]*:/02:/g" /sys/class/net/$WANIF/address)
+	ip link set address 02:9c:02:97:5d:4c up dev bat0
 	for a in "${SERVICE_ADDRESSES[@]}"; do
 		[ "$a" ] && ip addr add $a dev bat0
 	done
-	ip link set up dev bat0
-	alfred -m -i bat0 &> /dev/null &
 }
 
 batman_stop() {

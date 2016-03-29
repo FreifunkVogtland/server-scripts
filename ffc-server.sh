@@ -11,6 +11,7 @@
 . lib/dnsmasq.sh
 . lib/radvd.sh
 . lib/vpn03.sh
+. lib/meshviewer.sh
 
 # Set up network
 ffc_start() {
@@ -21,6 +22,7 @@ ffc_start() {
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	[ "$USE_RADVD" = "1" ] && radvd_init
 	[ "$USE_VPN03" = "1" ] && vpn03_init
+	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_init
 	
 	gre_add_all_tunnels
 	
@@ -35,7 +37,8 @@ ffc_start() {
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 	[ "$USE_RADVD" = "1" ] && radvd_start
 	[ "$USE_VPN03" = "1" ] && vpn03_start
-		
+	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_start
+	
 	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
 
@@ -48,6 +51,7 @@ ffc_stop() {
 	dnsmasq_stop
 	radvd_stop
 	vpn03_stop
+	meshviewer_stop
 	
 	while [ 1 ]; do
 		ip rule delete lookup 100 >> /dev/null 2>&1
