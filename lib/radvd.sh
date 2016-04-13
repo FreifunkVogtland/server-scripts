@@ -7,7 +7,7 @@ radvd_init() {
 	if [ "$USE_BIRD" != "1" ]; then
 		log_fatal_error "You must enable BIRD to use RADVD - please check configuration!"
 	fi
-	bird6_add_route "::/0" "$WANGW6"
+	bird6_add_route "::/0" "$WANGW6" "$WANIF"
 }
 
 radvd_start() {

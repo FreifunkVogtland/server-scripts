@@ -66,10 +66,11 @@ bird6_add_peer() {
 # Add BGP route
 # 	$1		IPv6 Route
 #	$2		Next hop (optional)
+#	$3		Next hop interface (mandatory, if $2 is selected)
 bird6_add_route() {
 	local via="\"bat0\""
-	if [ "$2" ]; then
-		local via="$2"
+	if [ "$2" ] && [ "$3" ]; then
+		local via="$2 % $3"
 	fi
 	sed -e "s|__BIRD_ROUTE__|$1|g" \
 		-e "s/__BIRD_VIA__/$via/g" \
