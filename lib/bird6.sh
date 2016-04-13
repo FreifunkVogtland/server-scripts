@@ -58,7 +58,7 @@ bird6_add_peer() {
 	local ip6R1=$(printf '%x' $ipR1)
 	local ip6R2=$(printf '%x' $ipR2)
 	sed -e "s/__BIRD_REMOTE_HOST__/$1/g" \
-		-e "s/__BIRD_REMOTE_IP__/fe80::ffc:${ip6R1}:${ip6R2} % gre-$1/g" \
+		-e "s/__BIRD_REMOTE_IP__/fe80::ffc:${ip6R1}:${ip6R2} % 'gre-$1'/g" \
 		-e "s/__BIRD_REMOTE_ASN__/${ipR1}${ipR2}/g" \
 		conf/bird-peers.conf >> conf/bird6-peers.local.conf
 }
