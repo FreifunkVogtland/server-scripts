@@ -62,7 +62,13 @@ bird_add_peer() {
 
 # Add BGP route
 # 	$1		IPv4 Route
+#	$2		Next hop (optional)
 bird_add_route() {
+	local via="\"bat0\""
+	if [ "$2" ]; then
+		local via="$2"
+	fi
 	sed -e "s|__BIRD_ROUTE__|$1|g" \
+		-e "s/__BIRD_VIA__/$via/g" \
 		conf/bird-routes.conf >> conf/bird-routes.local.conf
 }
