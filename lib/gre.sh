@@ -21,8 +21,11 @@ gre_add_tunnel() {
 	local ipL2=$(echo $WANIP | awk -F '.' '{print $4}')
 	local ipR1=$(echo $2 | awk -F '.' '{print $3}')
 	local ipR2=$(echo $2 | awk -F '.' '{print $4}')
+	local ip6R1=$(printf '%x' $ipR1)
+	local ip6R2=$(printf '%x' $ipR2)
 	ip link add $1 type gretap remote $2 local $WANIP ttl 255
 	ip addr add 169.254.${ipL1}.${ipL2} peer 169.254.${ipR1}.${ipR2}/32 scope link dev $1
+	ip -6 addr add fc00::fe80:${ip6R1}:${ip6R2}/64 dev $1
 	ip link set mtu 1426 up dev $1
 }
 
