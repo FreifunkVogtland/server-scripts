@@ -9,8 +9,8 @@ bird_init() {
 	
 	echo -n "" > conf/bird-peers.local.conf
 	for p in "${GRE_PEERS[@]}"; do
-		remoteHost=$(echo $p | awk -F ':' '{print $1}')
-		remoteIP=$(echo $p | awk -F ':' '{print $2}')
+		local remoteHost=$(echo $p | awk -F ':' '{print $1}')
+		local remoteIP=$(echo $p | awk -F ':' '{print $2}')
 		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
 			# Do not add ourselves as a peer
 			if [ "$remoteIP" != "$WANIP" ]; then
@@ -22,9 +22,9 @@ bird_init() {
 	done
 	
 	echo -n "" > conf/bird-routes.local.conf
-	for a in "${SERVICE_ADDRESSES[@]}"; do
-		if [ "$(bird_check_route "$a")" ]; then
-			bird_add_route "$a"
+	for s in "${SERVICE_ADDRESSES[@]}"; do
+		if [ "$(bird_check_route "$s")" ]; then
+			bird_add_route "$s"
 		fi
 	done
 	
@@ -33,10 +33,10 @@ bird_init() {
 	ip route add default via 127.0.0.1 table 100 metric 1024
 }
 
-# Check if address is an IP route
-#	$1		IPv4 address
+# Check for route
+#	$1		IPv4 route
 bird_check_route() {
-	[[ "$1" =~ .*/[0-9]+ ]] && echo "1"
+	[[ "$1" =~ ^[0-9.]*/[0-9]+ ]] && echo "1"
 }
 
 bird_start() {
@@ -61,7 +61,7 @@ bird_add_peer() {
 }
 
 # Add BGP route
-# 	$1		Route
+# 	$1		IPv4 Route
 bird_add_route() {
 	sed -e "s|__BIRD_ROUTE__|$1|g" \
 		conf/bird-routes.conf >> conf/bird-routes.local.conf
