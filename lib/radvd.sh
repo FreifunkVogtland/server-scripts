@@ -1,8 +1,7 @@
 #!/bin/bash
 
 radvd_init() {
-	# TODO: Will be implemented in bird6.sh
-	ip route add 2001:bc8:3f13:ffc2::/64 dev bat0
+	[ "$USE_BIRD" = "1" ] && bird6_add_route "::/0"
 }
 
 radvd_start() {
