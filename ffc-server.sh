@@ -21,7 +21,7 @@ ffc_start() {
 	gre_init
 	batman_init
 	[ "$USE_FASTD" = "1" ] && fastd_init
-	[ "$USE_BIRD" = "1" ] && bird_init && bird6_init
+	[ "$USE_BIRD" = "1" ] && (bird_init ; bird6_init)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	[ "$USE_RADVD" = "1" ] && radvd_init
 	[ "$USE_VPN03" = "1" ] && vpn03_init
@@ -36,7 +36,7 @@ ffc_start() {
 	batman_setup_interface
 	
 	[ "$USE_FASTD" = "1" ] && fastd_start
-	[ "$USE_BIRD" = "1" ] && bird_start && bird6_start
+	[ "$USE_BIRD" = "1" ] && (bird_start ; bird6_start)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 	[ "$USE_RADVD" = "1" ] && radvd_start
 	[ "$USE_VPN03" = "1" ] && vpn03_start

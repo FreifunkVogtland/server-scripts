@@ -6,7 +6,7 @@ bird6_init() {
 	local ip6L1=$(printf '%x' $ipL1)
 	local ip6L2=$(printf '%x' $ipL2)
 	sed -e "s/__BIRD_ROUTER_ID__/169.254.${ipL1}.${ipL2}/g" \
-		-e "s/__BIRD_ROUTER_IP__/fe80::ffc:${ip6L1}:${ip6L2}/g" \
+		-e "s/__BIRD_ROUTER_IP__/fc00::fe80:${ip6L1}:${ip6L2}/g" \
 		-e "s/__BIRD_ROUTER_ASN__/${ipL1}${ipL2}/g" \
 		conf/bird6.conf > conf/bird6.local.conf
 	
@@ -59,7 +59,7 @@ bird6_add_peer() {
 	local ip6R1=$(printf '%x' $ipR1)
 	local ip6R2=$(printf '%x' $ipR2)
 	sed -e "s/__BIRD_REMOTE_HOST__/$1/g" \
-		-e "s/__BIRD_REMOTE_IP__/fe80::ffc:${ip6R1}:${ip6R2}%gre-$1/g" \
+		-e "s/__BIRD_REMOTE_IP__/fc00::fe80:${ip6R1}:${ip6R2}%gre-$1/g" \
 		-e "s/__BIRD_REMOTE_ASN__/${ipR1}${ipR2}/g" \
 		conf/bird-peers.conf >> conf/bird6-peers.local.conf
 }
