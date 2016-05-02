@@ -1,2 +1,2 @@
 key "a5ddad4016b4c58bc36ebbdfc1bec910dba30f2386e42df4b53c3a7513421053";
-remote ipv4 "einstein.routers.chemnitz.freifunk.net" port 10000;
+remote ipv4 "einstein.routers.chemnitz.freifunk.net" port 15000;
