@@ -18,3 +18,11 @@ radvd_start() {
 radvd_stop() {
 	killall radvd >> /dev/null 2>&1
 }
+
+radvd_cron() {
+	pidof radvd > /dev/null
+	if [[ $? -ne 0 ]] ; then
+        	radvd -C conf/radvd.conf
+	fi
+}
+
