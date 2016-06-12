@@ -17,7 +17,11 @@ meshviewer_cron() {
         else
                 /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --rrd-path /opt/freifunk/meshviewer/data/nodedb --with-rrd
         fi
-	jq -c '.nodes = (.nodes | map(del(.value.nodeinfo.owner)))' < /opt/freifunk/meshviewer/data/nodes.json > /opt/freifunk/meshviewer/data/nodes.json.priv
+
+        jq -c '.nodes = (.nodes | map(del(.value.nodeinfo.owner)))' < /opt/freifunk/meshviewer/data/nodes.json > /opt/freifunk/meshviewer/data/nodes.json.priv.tmp
+        if json_pp < /opt/freifunk/meshviewer/data/nodes.json.priv.tmp >& /dev/null; then
+                mv /opt/freifunk/meshviewer/data/nodes.json.priv.tmp /opt/freifunk/meshviewer/data/nodes.json.priv
+        fi
 }
 
 meshviewer_stop() {
