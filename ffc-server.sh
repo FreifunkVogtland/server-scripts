@@ -70,11 +70,12 @@ ffc_watchdog() {
 	export IS_CRON="1"
 	local cronTime=$(date +%s)
 	
-	# every minute
+	# Every minute
 	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_cron
 	[ "$USE_RADVD" = "1" ] &&  radvd_cron
+	[ "$USE_DNSMASQ" = "1" ] &&  dnsmasq_cron
 	
-	# every 5 minutes
+	# Every 5 minutes
 	if [ $(($cronTime%300)) -lt 10 ]; then
 		gre_cron
 	fi
