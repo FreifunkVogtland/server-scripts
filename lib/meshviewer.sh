@@ -4,7 +4,7 @@ meshviewer_init() {
 	if [ "$USE_MESHVIEWER" = "1" ]; then
 		batman_wait_for_ll_address
 		alfred -m -i bat0 &> /dev/null &
-		batadv-vis &> /dev/null &
+		batadv-vis -s &> /dev/null &
 	fi
 }
 
