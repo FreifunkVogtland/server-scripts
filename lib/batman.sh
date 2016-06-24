@@ -31,6 +31,7 @@ batman_setup_interface() {
 	if [ "$USE_MESHVIEWER" != "1" ]; then
 		batman_wait_for_ll_address
 		alfred -i bat0 &> /dev/null &
+		batadv-vis &> /dev/null &
 	fi
 }
 
