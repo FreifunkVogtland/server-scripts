@@ -29,9 +29,29 @@ batman_setup_interface() {
 	done
 	
 	if [ "$USE_MESHVIEWER" != "1" ]; then
-		sleep 2
+		batman_wait_for_ll_address
 		alfred -i bat0 &> /dev/null &
 	fi
+}
+
+batman_wait_for_ll_address() {
+	local iface="bat0"
+	local timeout=30
+
+	for i in $(seq $timeout); do
+		# We look for
+		# - the link-local address (starts with fe80)
+		# - without tentative flag (bit 0x40 in the flags field; the first char of the flags field begins 38 columns after the fe80 prefix
+		# - on interface $iface
+		if awk '
+			BEGIN { RET=1 }
+			/^fe80............................ .. .. .. [012389ab]./ { if ($6 == "'"$iface"'") RET=0 }
+			END { exit RET }
+		' /proc/net/if_inet6; then
+			return
+		fi
+		sleep 1
+	done
 }
 
 batman_stop() {
