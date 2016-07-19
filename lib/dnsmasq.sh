@@ -15,3 +15,11 @@ dnsmasq_start() {
 dnsmasq_stop() {
 	killall dnsmasq >> /dev/null 2>&1
 }
+
+# Called by watchdog
+dnsmasq_cron() {
+	pidof dnsmasq > /dev/null
+	if [[ $? -ne 0 ]] ; then
+		dnsmasq_start
+	fi
+}
