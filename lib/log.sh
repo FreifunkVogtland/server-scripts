@@ -11,7 +11,7 @@ log_add_msg() {
 #	$1		Message
 log_add_mail() {
 	local logDate=$(date "+%Y-%m-%d %H:%M:%S")
-	mail -s "[FFC] Server Alert - $(hostname -f)" "crew@chemnitz.freifunk.net" <<EOF
+	mail -s "[FFC] Server Alert - $(hostname -f)" "${LOG_TO}" <<EOF
 $logDate
 
 $1

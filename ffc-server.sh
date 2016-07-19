@@ -32,6 +32,7 @@ ffc_start() {
 	local running_ifnames=$(gre_get_running_ifnames)
 	for i in $running_ifnames; do
 		batman_add_interface "$i"
+		echo 1 > /sys/class/net/"$i"/batman_adv/no_rebroadcast
 	done
 	batman_setup_interface
 	
@@ -69,11 +70,12 @@ ffc_watchdog() {
 	export IS_CRON="1"
 	local cronTime=$(date +%s)
 	
-	# every minute
+	# Every minute
 	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_cron
 	[ "$USE_RADVD" = "1" ] &&  radvd_cron
+	[ "$USE_DNSMASQ" = "1" ] &&  dnsmasq_cron
 	
-	# every 5 minutes
+	# Every 5 minutes
 	if [ $(($cronTime%300)) -lt 10 ]; then
 		gre_cron
 	fi
