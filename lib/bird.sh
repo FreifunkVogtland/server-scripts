@@ -48,6 +48,14 @@ bird_stop() {
 	killall bird >> /dev/null 2>&1
 }
 
+bird_cron() {
+	if [ -n $WANGW -a -n $APIKEY ]; then
+		wget "http://api.routers.chemnitz.freifunk.net/request.php?apikey=$APIKEY&type=routing&region=$COUNTRY" -q -O conf/bird-routes.country.conf
+		sed -e "s/NEXTHOP/$WANGW/g" -i "conf/bird-routes.country.conf"
+		killall bird -s SIGHUP
+	fi
+}
+
 # Add BGP peer
 # 	$1		Hostname
 # 	$2		Peer IPv4 address

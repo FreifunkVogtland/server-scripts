@@ -78,6 +78,7 @@ ffc_watchdog() {
 	# Every 5 minutes
 	if [ $(($cronTime%300)) -lt 10 ]; then
 		gre_cron
+		[ "$USE_BIRD" = "1" ] && bird_cron
 	fi
 }
 
