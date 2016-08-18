@@ -10,14 +10,7 @@ meshviewer_init() {
 
 # Called by watchdog
 meshviewer_cron() {
-        local cronTime=$(date +%s)
-
-        if [ $(($cronTime%1800)) -lt 10 ]; then
-                # every 30 min with image creation
-                /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --rrd-path /opt/freifunk/meshviewer/data/nodedb --with-rrd --with-img
-        else
-                /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --rrd-path /opt/freifunk/meshviewer/data/nodedb --with-rrd --prune 60
-        fi
+        /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --prune 30 --with-graphite --graphite-host 'gianotti.routers.chemnitz.freifunk.net' --graphite-metrics 'clients,loadavg,memory_usage,rootfs_usage,uptime,traffic.rx.bytes,traffic.tx.bytes,traffic.mgmt_tx.bytes,traffic.mgmt_rx.bytes,traffic.forward.bytes'
 
         jq -c '.nodes = (.nodes | map(del(.value.nodeinfo.owner)))' < /opt/freifunk/meshviewer/data/nodes.json > /opt/freifunk/meshviewer/data/nodes.json.priv.tmp
         if json_pp < /opt/freifunk/meshviewer/data/nodes.json.priv.tmp >& /dev/null; then
