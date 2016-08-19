@@ -27,7 +27,9 @@ bird_init() {
 			bird_add_route "$s"
 		fi
 	done
-	
+
+	touch conf/bird-routes.country.conf
+
 	ip rule add from 10.149.0.0/16 lookup 100
 	ip rule add to 10.149.0.0/16 lookup 100
 	ip route add default via 127.0.0.1 table 100 metric 1024
