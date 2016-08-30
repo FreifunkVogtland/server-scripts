@@ -33,6 +33,8 @@ bird_init() {
 	ip rule add from 10.149.0.0/16 lookup 100
 	ip rule add to 10.149.0.0/16 lookup 100
 	ip route add default via 127.0.0.1 table 100 metric 1024
+	
+	iptables -t nat -A POSTROUTING -o $WANIF -j MASQUERADE
 }
 
 # Check for route
