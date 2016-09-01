@@ -11,10 +11,10 @@ Signed-off-by: Sven Eckelmann <sven@narfation.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/batman-adv/send.c b/net/batman-adv/send.c
-index d7195f5..ed07adf 100644
+index 7a9e5ef..50ccd4c 100644
 --- a/net/batman-adv/send.c
 +++ b/net/batman-adv/send.c
-@@ -496,8 +496,8 @@ int batadv_add_bcast_packet_to_list(struct batadv_priv *bat_priv,
+@@ -488,8 +488,8 @@ int batadv_add_bcast_packet_to_list(struct batadv_priv *bat_priv,
  	struct sk_buff *newskb;
  
  	if (!batadv_atomic_dec_not_zero(&bat_priv->bcast_queue_left)) {
