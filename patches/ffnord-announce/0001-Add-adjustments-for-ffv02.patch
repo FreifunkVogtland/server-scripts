@@ -1,0 +1,41 @@
+From 83a00f3c65515e4946eb740ac315712dc2ac9cb7 Mon Sep 17 00:00:00 2001
+From: root <root@vpn02>
+Date: Mon, 19 Sep 2016 17:49:16 +0200
+Subject: [PATCH] Add adjustments for ffv02
+
+---
+ nodeinfo.d/hostname | 2 +-
+ nodeinfo.d/node_id  | 2 +-
+ respondd.service    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/nodeinfo.d/hostname b/nodeinfo.d/hostname
+index 2730f20..188ac4e 100644
+--- a/nodeinfo.d/hostname
++++ b/nodeinfo.d/hostname
+@@ -1 +1 @@
+-import_module('socket').gethostname()
++'ffv-'+import_module('socket').gethostname()
+diff --git a/nodeinfo.d/node_id b/nodeinfo.d/node_id
+index efdd705..5f76908 100644
+--- a/nodeinfo.d/node_id
++++ b/nodeinfo.d/node_id
+@@ -1 +1 @@
+-open('/sys/class/net/' + batadv_dev + '/address').read().strip().replace(':', '')
++open('/sys/class/net/eth0/address').read().strip().replace(':', '')
+diff --git a/respondd.service b/respondd.service
+index 1923418..550d691 100644
+--- a/respondd.service
++++ b/respondd.service
+@@ -2,7 +2,7 @@
+ Description=Respondd
+ 
+ [Service]
+-ExecStart=/opt/ffnord-alfred-announce/respondd.py
++ExecStart=/opt/freifunk/ffnord-alfred-announce/respondd.py -d /opt/freifunk/ffnord-alfred-announce/ -i fastd-mesh -i dummy0 -i gre-fermi -i gre-euler -i gre-brewster -i gre-newton -i gre-pascal -i gre-ffv02 -i gre-gianotti -i gre-bequerel
+ Restart=always
+ Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ 
+-- 
+2.1.4
+
