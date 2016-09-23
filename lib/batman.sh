@@ -6,6 +6,7 @@ batman_init() {
 	batctl interface add dummy0
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
+	ip addr add 2001:bc8:3f13:ffc2:250:56ff:febd:6c6e/64 dev bat0
 	[ "$USE_DNSMASQ" = "1" ] && batctl gw_mode server
 }
 
