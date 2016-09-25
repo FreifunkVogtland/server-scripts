@@ -68,7 +68,7 @@ bird6_add_peer() {
 #	$2		Next hop (optional)
 #	$3		Next hop interface (mandatory, if $2 is selected)
 bird6_add_route() {
-	local via="\"bat0\""
+	local via="\"br-ff\""
 	if [ "$2" ] && [ "$3" ]; then
 		local via="$2 % $3"
 	fi

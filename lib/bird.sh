@@ -77,7 +77,7 @@ bird_add_peer() {
 #	$2		Next hop (optional)
 #	$3		Next hop interface (optional)
 bird_add_route() {
-	local via="\"bat0\""
+	local via="\"br-ff\""
 	[ "$2" ] && local via="$2"
 	[ "$3" ] && local via="\"$3\""
 	sed -e "s|__BIRD_ROUTE__|$1|g" \
