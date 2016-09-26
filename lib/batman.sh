@@ -23,8 +23,8 @@ batman_add_interface() {
 	if [[ $1 == gre-ffv* ]]; then
 		batctl -m bat0 interface add $1
 	else
-		#batctl -m bat0 interface add $1
-		batctl -m bat1 interface add $1
+		batctl -m bat0 interface add $1
+		#batctl -m bat1 interface add $1
 	fi
 }
 
@@ -34,8 +34,8 @@ batman_del_interface() {
 	if [[ $1 == gre-ffv* ]]; then
 		batctl -m bat0 interface del $1 >> /dev/null 2>&1
 	else
-		#batctl -m bat0 interface del $1 >> /dev/null 2>&1
-		batctl -m bat1 interface del $1 >> /dev/null 2>&1
+		batctl -m bat0 interface del $1 >> /dev/null 2>&1
+		#batctl -m bat1 interface del $1 >> /dev/null 2>&1
 	fi
 }
 
