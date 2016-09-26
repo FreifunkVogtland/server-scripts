@@ -10,12 +10,18 @@ meshviewer_init() {
 
 # Called by watchdog
 meshviewer_cron() {
-        /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --prune 30 --with-graphite --graphite-host 'gianotti.routers.chemnitz.freifunk.net' --graphite-metrics 'clients,loadavg,memory_usage,rootfs_usage,uptime,traffic.rx.bytes,traffic.tx.bytes,traffic.mgmt_tx.bytes,traffic.mgmt_rx.bytes,traffic.forward.bytes'
+        /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --rrd-path /opt/freifunk/meshviewer/data/nodedb --with-rrd --prune 30
 
-        jq -c '.nodes = (.nodes | map(del(.value.nodeinfo.owner)))' < /opt/freifunk/meshviewer/data/nodes.json > /opt/freifunk/meshviewer/data/nodes.json.priv.tmp
-        if json_pp < /opt/freifunk/meshviewer/data/nodes.json.priv.tmp >& /dev/null; then
-                mv /opt/freifunk/meshviewer/data/nodes.json.priv.tmp /opt/freifunk/meshviewer/data/nodes.json.priv
-        fi
+	# TODO
+	/opt/freifunk/meshviewer/ffv-meshviewer-filter/filter.py /opt/freifunk/meshviewer/data/ /var/www/meshviewer/ffv/
+
+	/opt/freifunk/meshviewer/ffv-meshviewer-filter/globalrrd.py /var/www/meshviewer/ffv/ /opt/freifunk/meshviewer/ffv-meshviewer-filter/nodedb/
+	/opt/freifunk/meshviewer/ffv-meshviewer-filter/globalGraph.sh /opt/freifunk/meshviewer/ffv-meshviewer-filter/nodedb/nodes.rrd /var/www/meshviewer/ffv/globalGraph.png
+
+	/opt/freifunk/meshviewer/ffv-nodes2eventlog/nodes2eventlog.py /var/www/meshviewer/ffv/nodes.json /opt/freifunk/meshviewer/ffv-nodes2eventlog/db /var/www/meshviewer/ffv/eventlog.atom
+	OFFLINE_THRESHOLD=60 /opt/freifunk/meshviewer/ffv-nodes2eventlog/nodes2eventlog.py /var/www/meshviewer/ffv/nodes.json /opt/freifunk/meshviewer/ffv-nodes2eventlog/db-threshold60 /var/www/meshviewer/ffv/eventlog-threshold60.atom
+
+	/opt/freifunk/ffv-api-generator/api-gen.py /var/www/meshviewer/ffv/nodelist.json /var/www/meshviewer/ffv/
 }
 
 meshviewer_stop() {
