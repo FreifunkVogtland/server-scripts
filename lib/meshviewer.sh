@@ -10,9 +10,14 @@ meshviewer_init() {
 
 # Called by watchdog
 meshviewer_cron() {
-        /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --rrd-path /opt/freifunk/meshviewer/data/nodedb --with-rrd --prune 30
+        /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --with-rrd --prune 30 --with-graphite --graphite-metrics 'clients,loadavg,uptime' --with-graphite --graphite-metrics 'clients,loadavg,uptime,memory_usage,rootfs_usage,traffic.rx.bytes,traffic.tx.bytes,traffic.mgmt_tx.bytes,traffic.mgmt_rx.bytes,traffic.forward.bytes' --graphite-host localhost --graphite-prefix='freifunk.nodes.'
 
-	# TODO
+	# send global count to graphite
+	NUMNODES="$(/usr/sbin/batctl o | wc -l)"
+	NUMNODES=$(($NUMNODES -2))
+	echo "freifunk.global.onlinenodes $NUMNODES `date +%s`" | nc -q0 localhost 2003
+
+	# generate new files based on the json data
 	/opt/freifunk/meshviewer/ffv-meshviewer-filter/filter.py /opt/freifunk/meshviewer/data/ /var/www/meshviewer/ffv/
 
 	/opt/freifunk/meshviewer/ffv-meshviewer-filter/globalrrd.py /var/www/meshviewer/ffv/ /opt/freifunk/meshviewer/ffv-meshviewer-filter/nodedb/
