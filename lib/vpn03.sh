@@ -4,7 +4,7 @@ vpn03_init() {
 	if [ "$USE_BIRD" != "1" ]; then
 		log_fatal_error "You must enable BIRD to use VPN03 - please check configuration!"
 	fi
-	iptables -A POSTROUTING -t nat -o $WANIF -s 10.149.0.0/16 -j MASQUERADE
+	iptables -A POSTROUTING -t nat -o $WANIF -s 10.204.0.0/16 -j MASQUERADE
 	bird_add_route "0.0.0.0/0" "" "vpn03"
 }
 
