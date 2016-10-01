@@ -31,8 +31,8 @@ bird6_init() {
 		fi
 	done
 	
-	ip -6 rule add from 2001:bc8:3f13:ffc2::/64 lookup 100
-	ip -6 rule add to 2001:bc8:3f13:ffc2::/64 lookup 100
+	ip -6 rule add from 2a03:2260:200f::/48 lookup 100
+	ip -6 rule add to 2a03:2260:200f::/48 lookup 100
 }
 
 # Check for route
