@@ -1,0 +1,88 @@
+auto bb-a-ak-ber
+iface bb-a-ak-ber inet tunnel
+	mode gre
+	netmask 255.255.255.255
+	address 100.64.7.241
+	dstaddr 100.64.7.240
+	local 46.4.245.141
+	endpoint 185.66.195.0
+	ttl 64
+	mtu 1400
+
+iface bb-a-ak-ber inet6 static
+	address 2a03:2260:0:41a::2/64
+
+
+auto bb-b-ak-ber
+iface bb-b-ak-ber inet tunnel
+	mode gre
+	netmask 255.255.255.255
+	address 100.64.7.247
+	dstaddr 100.64.7.246
+	local 46.4.245.141
+	endpoint 185.66.195.1
+	ttl 64
+	mtu 1400
+
+iface bb-b-ak-ber inet6 static
+	address 2a03:2260:0:41d::2/64
+
+
+auto bb-a-ix-dus
+iface bb-a-ix-dus inet tunnel
+	mode gre
+	netmask 255.255.255.255
+	address 100.64.7.245
+	dstaddr 100.64.7.244
+	local 46.4.245.141
+	endpoint 185.66.193.0
+	ttl 64
+	mtu 1400
+
+iface bb-a-ix-dus inet6 static
+	address 2a03:2260:0:41c::2/64
+
+
+auto bb-b-ix-dus
+iface bb-b-ix-dus inet tunnel
+	mode gre
+	netmask 255.255.255.255
+	address 100.64.7.251
+	dstaddr 100.64.7.250
+	local 46.4.245.141
+	endpoint 185.66.193.1
+	ttl 64
+	mtu 1400
+
+iface bb-b-ix-dus inet6 static
+	address 2a03:2260:0:41f::2/64
+
+
+auto bb-a-fra2-fra
+iface bb-a-fra2-fra inet tunnel
+	mode gre
+	netmask 255.255.255.255
+	address 100.64.7.243
+	dstaddr 100.64.7.242
+	local 46.4.245.141
+	endpoint 185.66.194.0
+	ttl 64
+	mtu 1400
+
+iface bb-a-fra2-fra inet6 static
+	address 2a03:2260:0:41b::2/64
+
+
+auto bb-b-fra2-fra
+iface bb-b-fra2-fra inet tunnel
+	mode gre
+	netmask 255.255.255.255
+	address 100.64.7.249
+	dstaddr 100.64.7.248
+	local 46.4.245.141
+	endpoint 185.66.194.1
+	ttl 64
+	mtu 1400
+
+iface bb-b-fra2-fra inet6 static
+	address 2a03:2260:0:41e::2/64
