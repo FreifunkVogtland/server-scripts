@@ -33,6 +33,8 @@ bird6_init() {
 	
 	ip -6 rule add from 2a03:2260:200f::/48 lookup 100
 	ip -6 rule add to 2a03:2260:200f::/48 lookup 100
+
+	touch /var/tmp/bird6-icvpn.conf conf/bird6.ffrl.conf
 }
 
 # Check for route
