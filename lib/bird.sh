@@ -4,7 +4,7 @@ bird_init() {
 	local ipL1=$(echo $WANIP | awk -F '.' '{print $3}')
 	local ipL2=$(echo $WANIP | awk -F '.' '{print $4}')
 	sed -e "s/__BIRD_ROUTER_ID__/169.254.${ipL1}.${ipL2}/g" \
-		-e "s/__BIRD_ROUTER_ASN__/${ipL1}${ipL2}/g" \
+		-e "s/__BIRD_ROUTER_ASN__/${OWNASN}/g" \
 		conf/bird.conf > conf/bird.local.conf
 	
 	echo -n "" > conf/bird-peers.local.conf
@@ -68,7 +68,7 @@ bird_add_peer() {
 	local ipR2=$(echo $2 | awk -F '.' '{print $4}')
 	sed -e "s/__BIRD_REMOTE_HOST__/$1/g" \
 		-e "s/__BIRD_REMOTE_IP__/169.254.${ipR1}.${ipR2}/g" \
-		-e "s/__BIRD_REMOTE_ASN__/${ipR1}${ipR2}/g" \
+		-e "s/__BIRD_REMOTE_ASN__/${OWNASN}/g" \
 		conf/bird-peers.conf >> conf/bird-peers.local.conf
 }
 
