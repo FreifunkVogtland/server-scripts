@@ -45,6 +45,7 @@ bird_init() {
 		echo "if net ~ ${BACKBONE_IPV4} then accept;" >> conf/bird-hostroute.local.conf
 		ip addr add "${BACKBONE_IPV4}" dev lo
 		iptables -t nat -A POSTROUTING -o bb-+ -j SNAT --to-source "$(echo "${BACKBONE_IPV4}"|sed 's/\/.*$//')"
+		ip rule add from ${BACKBONE_IPV4} lookup 100
 	fi
 }
 
