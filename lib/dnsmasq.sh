@@ -5,6 +5,7 @@ dnsmasq_init() {
 		log_fatal_error "Missing DHCP service address - please check configuration!"
 	fi
 	sed -e "s/__DNSMASQ_SERVICE_IP__/${SERVICE_ADDRESSES[0]}/g" \
+		-e "s/__DNSMASQ_RANGE__/${DNSMASQ_RANGE}/g" \
 		conf/dnsmasq.conf > conf/dnsmasq.local.conf
 }
 
