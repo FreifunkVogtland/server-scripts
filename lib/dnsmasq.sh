@@ -1,10 +1,11 @@
 #!/bin/bash
 
 dnsmasq_init() {
-	if [ ! "${SERVICE_ADDRESSES[0]}" ]; then
-		log_fatal_error "Missing DHCP service address - please check configuration!"
+	if [ ! -n "${ROUTERID}" ]; then
+		log_fatal_error "Missing ROUTERID address for DHCP - please check configuration!"
 	fi
-	sed -e "s/__DNSMASQ_SERVICE_IP__/${SERVICE_ADDRESSES[0]}/g" \
+
+	sed -e "s/__DNSMASQ_SERVICE_IP__/${ROUTERID}/g" \
 		-e "s/__DNSMASQ_RANGE__/${DNSMASQ_RANGE}/g" \
 		conf/dnsmasq.conf > conf/dnsmasq.local.conf
 }

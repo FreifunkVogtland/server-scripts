@@ -24,8 +24,13 @@ batman_del_interface() {
 batman_setup_interface() {
 	local macAddress=$(sed -e "s/^[a-z0-9]*:/02:/g" /sys/class/net/$WANIF/address)
 	ip link set address $macAddress up dev bat0
+
+	if [ -n "${ROUTERID}" ]; then
+		ip addr add ${ROUTERID}/16 dev bat0
+	fi
+
 	for a in "${SERVICE_ADDRESSES[@]}"; do
-		[ "$a" ] && ip addr add $a dev bat0
+		[ "$a" ] && ip addr add ${ROUTERID}/16 dev bat0
 	done
 	
 	if [ "$USE_MESHVIEWER" != "1" ]; then
