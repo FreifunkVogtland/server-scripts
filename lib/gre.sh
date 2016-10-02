@@ -49,7 +49,8 @@ gre_add_all_tunnels() {
 	fi
 	for p in "${GRE_PEERS[@]}"; do
 		remoteHost=$(echo $p | awk -F ':' '{print $1}')
-		remoteIP=$(echo $p | awk -F ':' '{print $2}')
+		remoteID=$(echo $p | awk -F ':' '{print $2}')
+		remoteIP=$(echo $p | awk -F ':' '{print $3}')
 		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
 			# Do not add ourselves as a peer
 			if [ "$remoteIP" != "$WANIP" ]; then
