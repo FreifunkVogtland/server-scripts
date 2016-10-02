@@ -23,7 +23,6 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_init
 	[ "$USE_BIRD" = "1" ] && (bird_init ; bird6_init)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
-	[ "$USE_RADVD" = "1" ] && radvd_init
 	[ "$USE_VPN03" = "1" ] && vpn03_init
 	meshviewer_init
 	
