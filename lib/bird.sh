@@ -36,6 +36,14 @@ bird_init() {
 	ip route add default via 127.0.0.1 table 100 metric 1024
 	
 	iptables -t nat -A POSTROUTING -o $WANIF -j MASQUERADE
+
+	touch /var/tmp/bird-icvpn.conf conf/bird.ffrl.conf
+	echo "" > conf/bird-hostroute.local.conf
+	if [ -n "${BACKBONE_IPV4}" ]; then
+		echo "if net ~ ${BACKBONE_IPV4} then accept;" >> conf/bird-hostroute.local.conf
+		ip addr add "${BACKBONE_IPV4}" dev lo
+		iptables -t nat -A POSTROUTING -o bb-+ -j SNAT --to-source "$(echo "${BACKBONE_IPV4}"|sed 's/\/.*$//')"
+	fi
 }
 
 # Check for route
