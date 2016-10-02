@@ -18,7 +18,7 @@ bird6_init() {
 		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
 			# Do not add ourselves as a peer
 			if [ "$remoteIP" != "$WANIP" ]; then
-				bird6_add_peer "${remoteHost}" "$remoteID" "$remoteIP"
+				bird6_add_peer "${remoteHost}" "$remoteID"
 			fi
 		else
 			log_error "Syntax error in peer definition: ${p}"
@@ -55,14 +55,10 @@ bird6_stop() {
 # Add BGP peer
 # 	$1		Hostname
 # 	$2		Peer ID
-# 	$2		Peer IPv6 address
 bird6_add_peer() {
-	local ipR1=$(echo $3 | awk -F '.' '{print $3}')
-	local ipR2=$(echo $3 | awk -F '.' '{print $4}')
-	local ip6R1=$(printf '%x' $ipR1)
-	local ip6R2=$(printf '%x' $ipR2)
+	local ipP1="$2"
 	sed -e "s/__BIRD_REMOTE_HOST__/$1/g" \
-		-e "s/__BIRD_REMOTE_IP__/fe80::ffc:${ip6R1}:${ip6R2} % 'gre-$1'/g" \
+		-e "s/__BIRD_REMOTE_IP__/2a03:2260:200f:1337::${ipP1}/g" \
 		-e "s/__BIRD_REMOTE_ASN__/${OWNASN}/g" \
 		conf/bird-peers.conf >> conf/bird6-peers.local.conf
 }

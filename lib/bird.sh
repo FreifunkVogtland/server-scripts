@@ -16,7 +16,7 @@ bird_init() {
 		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
 			# Do not add ourselves as a peer
 			if [ "$remoteIP" != "$WANIP" ]; then
-				bird_add_peer "${remoteHost}" "$remoteID" "$remoteIP"
+				bird_add_peer "${remoteHost}" "$remoteID"
 			fi
 		else
 			log_error "Syntax error in peer definition: ${p}"
@@ -73,12 +73,10 @@ bird_cron() {
 # Add BGP peer
 # 	$1		Hostname
 # 	$2		Peer ID
-# 	$3		Peer IPv4 address
 bird_add_peer() {
-	local ipR1=$(echo $3 | awk -F '.' '{print $3}')
-	local ipR2=$(echo $3 | awk -F '.' '{print $4}')
+	local ipP1="$(($2 << 4))"
 	sed -e "s/__BIRD_REMOTE_HOST__/$1/g" \
-		-e "s/__BIRD_REMOTE_IP__/169.254.${ipR1}.${ipR2}/g" \
+		-e "s/__BIRD_REMOTE_IP__/10.204.${ipP1}.1/g" \
 		-e "s/__BIRD_REMOTE_ASN__/${OWNASN}/g" \
 		conf/bird-peers.conf >> conf/bird-peers.local.conf
 }
