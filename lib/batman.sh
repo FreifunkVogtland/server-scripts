@@ -29,6 +29,10 @@ batman_setup_interface() {
 		ip addr add ${ROUTERID}/16 dev bat0
 	fi
 
+	if [ -n "${ROUTERIDV6}" ]; then
+		ip addr add ${ROUTERIDV6}/48 dev bat0
+	fi
+
 	for a in "${SERVICE_ADDRESSES[@]}"; do
 		[ "$a" ] && ip addr add ${ROUTERID}/16 dev bat0
 	done
