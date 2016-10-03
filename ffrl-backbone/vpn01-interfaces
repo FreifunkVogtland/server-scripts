@@ -13,19 +13,20 @@ iface bb-a-ak-ber inet6 static
 	address 2a03:2260:0:414::2/64
 
 
-auto bb-b-ak-ber
-iface bb-b-ak-ber inet tunnel
+
+auto bb-a-fra2-fra
+iface bb-a-fra2-fra inet tunnel
 	mode gre
 	netmask 255.255.255.255
-	address 100.64.7.235
-	dstaddr 100.64.7.234
+	address 100.64.7.231
+	dstaddr 100.64.7.230
 	local 194.25.105.16
-	endpoint 185.66.195.1
+	endpoint 185.66.194.0
 	ttl 64
 	mtu 1400
 
-iface bb-b-ak-ber inet6 static
-	address 2a03:2260:0:417::2/64
+iface bb-a-fra2-fra inet6 static
+	address 2a03:2260:0:415::2/64
 
 
 
@@ -44,36 +45,19 @@ iface bb-a-ix-dus inet6 static
 	address 2a03:2260:0:416::2/64
 
 
-
-auto bb-b-ix-dus
-iface bb-b-ix-dus inet tunnel
+auto bb-b-ak-ber
+iface bb-b-ak-ber inet tunnel
 	mode gre
 	netmask 255.255.255.255
-	address 100.64.7.239
-	dstaddr 100.64.7.238
+	address 100.64.7.235
+	dstaddr 100.64.7.234
 	local 194.25.105.16
-	endpoint 185.66.193.1
+	endpoint 185.66.195.1
 	ttl 64
 	mtu 1400
 
-iface bb-b-ix-dus inet6 static
-	address 2a03:2260:0:419::2/64
-
-
-
-auto bb-a-fra2-fra
-iface bb-a-fra2-fra inet tunnel
-	mode gre
-	netmask 255.255.255.255
-	address 100.64.7.231
-	dstaddr 100.64.7.230
-	local 194.25.105.16
-	endpoint 185.66.194.0
-	ttl 64
-	mtu 1400
-
-iface bb-a-fra2-fra inet6 static
-	address 2a03:2260:0:415::2/64
+iface bb-b-ak-ber inet6 static
+	address 2a03:2260:0:417::2/64
 
 
 auto bb-b-fra2-fra
@@ -89,3 +73,19 @@ iface bb-b-fra2-fra inet tunnel
 
 iface bb-b-fra2-fra inet6 static
 	address 2a03:2260:0:418::2/64
+
+
+
+auto bb-b-ix-dus
+iface bb-b-ix-dus inet tunnel
+	mode gre
+	netmask 255.255.255.255
+	address 100.64.7.239
+	dstaddr 100.64.7.238
+	local 194.25.105.16
+	endpoint 185.66.193.1
+	ttl 64
+	mtu 1400
+
+iface bb-b-ix-dus inet6 static
+	address 2a03:2260:0:419::2/64

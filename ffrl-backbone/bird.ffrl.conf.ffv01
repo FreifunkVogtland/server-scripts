@@ -3,9 +3,9 @@ protocol bgp bb_a_ak_ber from uplink {
     neighbor 100.64.7.228 as 201701;
 };
 
-protocol bgp bb_b_ak_ber from uplink {
-    source address 100.64.7.235;
-    neighbor 100.64.7.234 as 201701;
+protocol bgp bb_a_fra2_fra from uplink {
+    source address 100.64.7.231;
+    neighbor 100.64.7.230 as 201701;
 };
 
 protocol bgp bb_a_ix_dus from uplink {
@@ -13,17 +13,17 @@ protocol bgp bb_a_ix_dus from uplink {
     neighbor 100.64.7.232 as 201701;
 };
 
-protocol bgp bb_b_ix_dus from uplink {
-    source address 100.64.7.239;
-    neighbor 100.64.7.238 as 201701;
-};
-
-protocol bgp bb_a_fra2_fra from uplink {
-    source address 100.64.7.231;
-    neighbor 100.64.7.230 as 201701;
+protocol bgp bb_b_ak_ber from uplink {
+    source address 100.64.7.235;
+    neighbor 100.64.7.234 as 201701;
 };
 
 protocol bgp bb_b_fra2_fra from uplink {
     source address 100.64.7.237;
     neighbor 100.64.7.236 as 201701;
+};
+
+protocol bgp bb_b_ix_dus from uplink {
+    source address 100.64.7.239;
+    neighbor 100.64.7.238 as 201701;
 };
