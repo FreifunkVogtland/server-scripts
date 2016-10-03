@@ -37,7 +37,8 @@ bird_init() {
 	ip route add default via 127.0.0.1 table 100 metric 1024
 	
 	iptables -t nat -A POSTROUTING -o $WANIF -j MASQUERADE
-	iptables -t mangle -A FORWARD -o bb-+ -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+	iptables -t mangle -A FORWARD -o bb-+ -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss ! --mss 0:1240 -j TCPMSS --set-mss 1240
+	iptables -t mangle -A FORWARD -o bat0 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss ! --mss 0:1240 -j TCPMSS --set-mss 1240
 
 	touch /var/tmp/bird-icvpn.conf conf/bird.ffrl.conf
 	echo "" > conf/bird-hostroute.local.conf
