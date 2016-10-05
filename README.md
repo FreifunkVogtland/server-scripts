@@ -42,6 +42,11 @@ The vpn interface stats also require:
 * libapache2-mod-php5
 * vnstati
 
+IC-VPN
+
+* tinc
+* python3-yaml
+
 ## Startup workarounds
 
 Some packages try to start automatically via their own init scripts. These
@@ -171,3 +176,22 @@ Save secret key for FFB VPN03 under `conf/vpn03.local.key`
     touch /opt/freifunk/meshviewer/ffmap-backend/alias.json
     mkdir -p /opt/freifunk/meshviewer/ffv-nodes2eventlog/db
     # read /opt/freifunk/meshviewer/ffv-meshviewer-filter/globalrrd.py for info how to create /opt/freifunk/meshviewer/ffv-meshviewer-filter/nodedb/
+
+## IC-VPN
+
+Required BIRD to be enabled and explanations for installation can be found
+under https://wiki.freifunk.net/IC-VPN
+
+We clone our icvpn scripts in /opt/freifunk/icvpn-scripts. The generated bgp
+peer configs have to be stored in
+
+ * /var/tmp/bird-icvpn.conf
+ * /var/tmp/bird6-icvpn.conf
+
+Also the mkbgp option "-d" has to be changed from peers to icvpn following
+is the part of the cron script which writes the peers
+
+    /opt/freifunk/icvpn-scripts/mkbgp -x vogtland -p icvpn_ -f bird  -d icvpn -s "$DATADIR" -4 > /var/tmp/bird-icvpn.conf
+    birdc configure > /dev/null
+    /opt/freifunk/icvpn-scripts/mkbgp -x vogtland -p icvpn_ -f bird  -d icvpn -s "$DATADIR" -6 > /var/tmp/bird6-icvpn.conf
+    birdc6 configure > /dev/null
