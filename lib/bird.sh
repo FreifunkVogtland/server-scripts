@@ -34,6 +34,7 @@ bird_init() {
 
 	ip rule add from 10.204.0.0/16 lookup 100
 	ip rule add to 10.204.0.0/16 lookup 100
+	ip rule add from 185.66.195.42/31 lookup 100
 	ip route add default via 127.0.0.1 table 100 metric 1024
 	
 	iptables -t nat -A POSTROUTING -o $WANIF -j MASQUERADE
@@ -46,7 +47,6 @@ bird_init() {
 		echo "if net ~ ${BACKBONE_IPV4} then accept;" >> conf/bird-hostroute.local.conf
 		ip addr add "${BACKBONE_IPV4}" dev lo
 		iptables -t nat -A POSTROUTING -o bb-+ -j SNAT --to-source "$(echo "${BACKBONE_IPV4}"|sed 's/\/.*$//')"
-		ip rule add from ${BACKBONE_IPV4} lookup 100
 	fi
 }
 
