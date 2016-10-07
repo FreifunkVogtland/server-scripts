@@ -195,3 +195,9 @@ is the part of the cron script which writes the peers
     birdc configure > /dev/null
     /opt/freifunk/icvpn-scripts/mkbgp -x vogtland -p icvpn_ -f bird  -d icvpn -s "$DATADIR" -6 > /var/tmp/bird6-icvpn.conf
     birdc6 configure > /dev/null
+
+For DNS the dnsmasq config has to be created
+
+    /opt/freifunk/icvpn-scripts/mkdns -s "$DATADIR" -x vogtland -f dnsmasq > /var/tmp/dnsmasq-icvpn.conf
+    
+TODO automatically restart dnsmasq on dnsmasq-icvpn.conf changes

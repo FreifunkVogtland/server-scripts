@@ -11,6 +11,8 @@ dnsmasq_init() {
 }
 
 dnsmasq_start() {
+	touch /var/tmp/dnsmasq-icvpn.conf
+	md5sum /var/tmp/dnsmasq-icvpn.conf > /var/tmp/dnsmasq-icvpn.conf.md5sum
 	dnsmasq -C conf/dnsmasq.local.conf
 }
 
