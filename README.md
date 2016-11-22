@@ -67,6 +67,7 @@ process
     systemctl enable ffc
     echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/ffc
     echo '* * * * *   root /opt/freifunk/server-scripts/initd-ffc.sh watchdog' >> /etc/cron.d/ffc
+    git clone https://github.com/FreifunkVogtland/dns-static.git /opt/freifunk/dns
 
 ## Extra configuration in /etc
 
