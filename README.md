@@ -62,7 +62,7 @@ process
 ## Checkout of the repository
 
     mkdir -p /opt/freifunk/
-    git clone https://github.com/FreifunkChemnitz/server-scripts.git /opt/freifunk/server-scripts
+    git clone https://github.com/FreifunkVogtland/server-scripts.git /opt/freifunk/server-scripts
     ln -s /opt/freifunk/server-scripts/initd-ffc.sh /etc/init.d/ffc
     systemctl enable ffc
     echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/ffc
