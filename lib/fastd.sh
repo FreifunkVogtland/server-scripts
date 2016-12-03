@@ -8,7 +8,10 @@ fastd_init() {
 
 fastd_start() {
 	touch conf/fastd.local.conf
-	fastd -d -c conf/fastd.conf
+	fastd -d -c conf/fastd0.conf
+	fastd -d -c conf/fastd1.conf
+	fastd -d -c conf/fastd2.conf
+	fastd -d -c conf/fastd3.conf
 }
 
 fastd_stop() {

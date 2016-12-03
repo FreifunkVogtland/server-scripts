@@ -164,7 +164,7 @@ Save secret key for FFB VPN03 under `conf/vpn03.local.key`
     ln -s /var/www/vnstat/index.php /var/www/html/index.php
     ln -s /var/www/vnstat/stats.conf /var/www/html/stats.conf
     echo '* *     * * *   root    /var/www/vnstat/vnstat.sh' >> /etc/cron.d/ffc
-    # now adjust interfaces (usually "eth0 fastd-mesh") and wwwroot (usually "/var/www/html"
+    # now adjust interfaces (usually "eth0 fastd-mesh0 fastd-mesh1 fastd-mesh2 fastd-mesh3") and wwwroot (usually "/var/www/html")
     vi /var/www/vnstat/stats.conf
 
 ### Meshviewer
