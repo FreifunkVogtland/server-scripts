@@ -7,6 +7,7 @@ fastd_init() {
 }
 
 fastd_start() {
+	touch conf/fastd.local.conf
 	fastd -d -c conf/fastd.conf
 }
 
