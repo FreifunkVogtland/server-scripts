@@ -1,0 +1,25 @@
+From 2d17eefacc9e3d4ea27eb7337dfcc28aaf43ecf7 Mon Sep 17 00:00:00 2001
+From: root <root@vpn01.ffv>
+Date: Sun, 4 Dec 2016 15:33:55 +0100
+Subject: [PATCH] Add gateway and gateway_nexthop info to statistics
+
+---
+ lib/nodes.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/lib/nodes.py b/lib/nodes.py
+index ef304e8..c937ccc 100644
+--- a/lib/nodes.py
++++ b/lib/nodes.py
+@@ -119,6 +119,8 @@ def import_statistics(nodes, stats):
+             lambda d: 1 - (d['free'] + d['buffers'] + d['cached']) / d['total'])
+         add(node, stats, 'rootfs_usage', ['rootfs_usage'])
+         add(node, stats, 'traffic', ['traffic'])
++        add(node, stats, 'gateway', ['gateway'])
++        add(node, stats, 'gateway_nexthop', ['gateway_nexthop'])
+         mark_uplink(node, stats)
+ 
+ 
+-- 
+2.1.4
+
