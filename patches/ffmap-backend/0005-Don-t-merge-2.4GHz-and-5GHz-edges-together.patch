@@ -1,0 +1,29 @@
+From 1003c41e1c89ae392d2e1810254d623191fef6a6 Mon Sep 17 00:00:00 2001
+From: root <root@vpn01.ffv>
+Date: Mon, 5 Dec 2016 12:27:06 +0100
+Subject: [PATCH] Don't merge 2.4GHz and 5GHz edges together
+
+Hopglass can show 2.4GHz and 5GHz links separately. This can help to debug
+problems in case only one of the links isn't working as expected.
+
+---
+ backend.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/backend.py b/backend.py
+index 62185d0..48e476d 100755
+--- a/backend.py
++++ b/backend.py
+@@ -139,7 +139,8 @@ def main(params):
+ 
+     graph.mark_vpn(batadv_graph, extract_tunnel(nodedb['nodes']))
+ 
+-    batadv_graph = graph.merge_nodes(batadv_graph)
++    #batadv_graph = graph.merge_nodes(batadv_graph)
++    batadv_graph = graph.to_multigraph(batadv_graph)
+     #batadv_graph = graph.to_undirected(batadv_graph)
+ 
+     # write processed data to temporary files in dest dir
+-- 
+2.1.4
+
