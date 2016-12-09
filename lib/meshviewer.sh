@@ -16,6 +16,7 @@ meshviewer_cron() {
 	NUMNODES="$(/usr/sbin/batctl o | wc -l)"
 	NUMNODES=$(($NUMNODES -2))
 	echo "freifunk.global.onlinenodes $NUMNODES `date +%s`" | nc -q0 localhost 2003
+	/opt/freifunk/ffv-grafana-config/graphite-clients.py /opt/freifunk/meshviewer/data/nodes.json | nc -q0 localhost 2003
 
 	# generate new files based on the json data
 	/opt/freifunk/meshviewer/ffv-meshviewer-filter/filter.py /opt/freifunk/meshviewer/data/ /var/www/meshviewer/ffv/
