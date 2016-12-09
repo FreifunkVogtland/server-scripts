@@ -1,0 +1,40 @@
+From: Sven Eckelmann <sven@narfation.org>
+Date: Fri, 9 Dec 2016 19:57:20 +0100
+Subject: [PATCH] Use same timestamp for all graphite values
+
+The graphite aggregation fails to do proper aggregation when all entries
+have different timestamps.
+---
+ lib/graphite.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/lib/graphite.py b/lib/graphite.py
+index 571e98a..a65d206 100644
+--- a/lib/graphite.py
++++ b/lib/graphite.py
+@@ -1,6 +1,7 @@
+ import socket
+ import time
+ 
++graphite_timestamp = timestamp = int(time.time())
+ 
+ class Graphite(object):
+ 
+@@ -18,8 +19,6 @@ class Graphite(object):
+         return dict(items)
+ 
+     def update(self, prefix, metrics, nodes):
+-        timestamp = int(time.time())
+-
+         sock = socket.socket()
+         sock.connect((self.hostname, self.port))
+ 
+@@ -34,7 +33,7 @@ class Graphite(object):
+                                 node['nodeinfo']['node_id'].replace(' ', '_'),
+                                 metric.replace(' ', '_'),
+                                 stats[metric],
+-                                timestamp
++                                graphite_timestamp
+                             )
+                             sock.send(msg.encode('utf-8'))
+ 
