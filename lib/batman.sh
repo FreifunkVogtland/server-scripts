@@ -6,6 +6,7 @@ batman_init() {
 	batctl interface add dummy0
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
+	batctl orig_interval 5000
 	[ "$USE_DNSMASQ" = "1" ] && batctl gw_mode server
 }
 
