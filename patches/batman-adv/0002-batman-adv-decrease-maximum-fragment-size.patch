@@ -6,10 +6,10 @@ Subject: [PATCH] batman-adv: decrease maximum fragment size
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/batman-adv/main.h b/net/batman-adv/main.h
-index 06a8608..6306aa1 100644
+index a6cc804..5b78555 100644
 --- a/net/batman-adv/main.h
 +++ b/net/batman-adv/main.h
-@@ -167,7 +167,7 @@ enum batadv_uev_type {
+@@ -168,7 +168,7 @@ enum batadv_uev_type {
  /* Maximum number of fragments for one packet */
  #define BATADV_FRAG_MAX_FRAGMENTS 16
  /* Maxumim size of each fragment */
