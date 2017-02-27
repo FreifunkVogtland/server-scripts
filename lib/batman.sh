@@ -7,6 +7,7 @@ batman_init() {
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
 	batctl orig_interval 5000
+	echo 60 > /sys/devices/virtual/net/bat0/mesh/hop_penalty
 	[ "$USE_DNSMASQ" = "1" ] && batctl gw_mode server
 }
 
