@@ -28,8 +28,9 @@ batman_del_interface() {
 }
 
 batman_setup_interface() {
-	local macAddress=$(sed -e "s/^[a-z0-9]*:/02:/g" /sys/class/net/$WANIF/address)
-	ip link set address $macAddress up dev bat0
+	local ownID="$(gre_own_id)"
+	ip link set dev bat0 address "$(printf "02:ba:7a:df:%02x:00" "$ownID")"
+	ip link set  up dev bat0
 
 	if [ -n "${ROUTERID}" ]; then
 		ip addr add ${ROUTERID}/16 dev bat0
