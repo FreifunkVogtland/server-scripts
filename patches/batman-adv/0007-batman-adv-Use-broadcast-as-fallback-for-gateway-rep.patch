@@ -19,10 +19,10 @@ Signed-off-by: Sven Eckelmann <sven@narfation.org>
  1 file changed, 12 insertions(+)
 
 diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
-index 7b3494a..60403d0 100644
+index d042c99af028e2083307de1ba8978f2061fee45d..904ed3f8687bf72e9f615fdc02cba585e23e70b3 100644
 --- a/net/batman-adv/soft-interface.c
 +++ b/net/batman-adv/soft-interface.c
-@@ -319,6 +319,18 @@ send:
+@@ -320,6 +320,18 @@ static int batadv_interface_tx(struct sk_buff *skb,
  			if (forw_mode == BATADV_FORW_SINGLE)
  				do_bcast = false;
  		}
