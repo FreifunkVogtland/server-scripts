@@ -15,7 +15,8 @@ meshviewer_cron() {
 	# send global count to graphite
 	NUMNODES="$(cat /sys/kernel/debug/batman_adv/bat0/originators| wc -l)"
 	NUMNODES=$(($NUMNODES -2))
-	echo "freifunk.global.onlinenodes $NUMNODES `date +%s`" | nc -q0 localhost 2003
+	echo "freifunk.global.originators $NUMNODES `date +%s`" | nc -q0 localhost 2003
+	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /opt/freifunk/meshviewer/data/nodes.json | nc -q0 localhost 2003
 	/opt/freifunk/ffv-grafana-config/graphite-clients.py /opt/freifunk/meshviewer/data/nodes.json | nc -q0 localhost 2003
 
 	# generate new files based on the json data
