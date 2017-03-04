@@ -18,6 +18,11 @@ PATH=$PATH:/usr/local/sbin/
 
 # Set up network
 ffc_start() {
+	ownid="$(gre_own_id)"
+	if [ "$ownid" = "0" ]; then
+		log_fatal_error "Own WANIP not found in GRE_PEERS - please check configuration!"
+	fi
+
 	gre_init
 	batman_init
 	[ "$USE_FASTD" = "1" ] && fastd_init

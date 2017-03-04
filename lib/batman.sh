@@ -1,8 +1,12 @@
 #!/bin/bash
 
 batman_init() {
+	local ownID="$(gre_own_id)"
+
 	modprobe batman-adv
 	modprobe dummy
+
+	ip link set dev dummy0 address "$(printf "02:62:e7:ab:%02x:%02x" "$ownID" "$ownID")"
 	batctl interface add dummy0
 	batctl bridge_loop_avoidance 1
 	batctl bonding 1
