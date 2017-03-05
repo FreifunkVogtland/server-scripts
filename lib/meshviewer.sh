@@ -13,8 +13,7 @@ meshviewer_cron() {
         /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --with-rrd --prune 14 --with-graphite --graphite-metrics 'clients,loadavg,uptime' --with-graphite --graphite-metrics 'clients,loadavg,uptime,memory_usage,rootfs_usage,traffic.rx.bytes,traffic.tx.bytes,traffic.mgmt_tx.bytes,traffic.mgmt_rx.bytes,traffic.forward.bytes' --graphite-host localhost --graphite-prefix='freifunk.nodes.'
 
 	# send global count to graphite
-	NUMNODES="$(cat /sys/kernel/debug/batman_adv/bat0/originators| wc -l)"
-	NUMNODES=$(($NUMNODES -2))
+	NUMNODES="$(batctl o|grep '^ \* '| wc -l)"
 	echo "freifunk.global.originators $NUMNODES `date +%s`" | nc -q0 localhost 2003
 	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /opt/freifunk/meshviewer/data/nodes.json | nc -q0 localhost 2003
 	/opt/freifunk/ffv-grafana-config/graphite-clients.py /opt/freifunk/meshviewer/data/nodes.json | nc -q0 localhost 2003
