@@ -1,0 +1,24 @@
+From: Sven Eckelmann <sven@narfation.org>
+Date: Sat, 18 Mar 2017 22:14:18 +0100
+Subject: [PATCH] Save previous raw wireless stats
+---
+ lib/nodes.py | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/lib/nodes.py b/lib/nodes.py
+index b1980f5bbfad87acfec2edac2685e21141c91ba6..dba0951f66a63d2436e9ecd555a8eceec442c76c 100644
+--- a/lib/nodes.py
++++ b/lib/nodes.py
+@@ -96,7 +96,12 @@ def import_nodeinfo(nodes, nodeinfos, now, assume_online=False):
+ 
+ def reset_statistics(nodes):
+     for node in nodes.values():
++        wireless_raw = None
++        if 'wireless_raw' in node['statistics']:
++            wireless_raw = node['statistics']['wireless_raw']
+         node['statistics'] = {'clients': 0}
++        if wireless_raw:
++            node['statistics']['wireless_last'] = wireless_raw
+ 
+ 
+ def import_statistics(nodes, stats):
