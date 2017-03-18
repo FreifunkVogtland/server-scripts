@@ -9,7 +9,7 @@ have different timestamps.
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/lib/graphite.py b/lib/graphite.py
-index 571e98a..a65d206 100644
+index 571e98a432c9eb8d759fa32bfad62790b764d623..a65d2063e70f44f9a40b3fc58d39316e57f8303e 100644
 --- a/lib/graphite.py
 +++ b/lib/graphite.py
 @@ -1,6 +1,7 @@

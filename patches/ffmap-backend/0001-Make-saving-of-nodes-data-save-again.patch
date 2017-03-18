@@ -6,7 +6,7 @@ Subject: [PATCH] Make saving of nodes data save again
  1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/backend.py b/backend.py
-index 6800997..27335d0 100755
+index 6800997f8bd30c05fee5fc91b8036e4fe84ea0fd..27335d07d8b3d8189327b2b50a65b13b98bf0f34 100755
 --- a/backend.py
 +++ b/backend.py
 @@ -142,18 +142,28 @@ def main(params):
