@@ -6,7 +6,7 @@ Subject: [PATCH] Save previous raw wireless stats
  1 file changed, 5 insertions(+)
 
 diff --git a/lib/nodes.py b/lib/nodes.py
-index b1980f5bbfad87acfec2edac2685e21141c91ba6..dba0951f66a63d2436e9ecd555a8eceec442c76c 100644
+index b1980f5bbfad87acfec2edac2685e21141c91ba6..ec5c45fc55cdb0a245a44dde6a9587d838ae6619 100644
 --- a/lib/nodes.py
 +++ b/lib/nodes.py
 @@ -96,7 +96,12 @@ def import_nodeinfo(nodes, nodeinfos, now, assume_online=False):
@@ -14,7 +14,7 @@ index b1980f5bbfad87acfec2edac2685e21141c91ba6..dba0951f66a63d2436e9ecd555a8ecee
  def reset_statistics(nodes):
      for node in nodes.values():
 +        wireless_raw = None
-+        if 'wireless_raw' in node['statistics']:
++        if 'statistics' in node and 'wireless_raw' in node['statistics']:
 +            wireless_raw = node['statistics']['wireless_raw']
          node['statistics'] = {'clients': 0}
 +        if wireless_raw:

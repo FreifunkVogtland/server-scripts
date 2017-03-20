@@ -6,7 +6,7 @@ Subject: [PATCH] Add txpower information from respondd
  1 file changed, 1 insertion(+)
 
 diff --git a/lib/nodes.py b/lib/nodes.py
-index dba0951f66a63d2436e9ecd555a8eceec442c76c..bd6336f45e711e020c445abc4fd31921e4ec1d08 100644
+index ec5c45fc55cdb0a245a44dde6a9587d838ae6619..7a177c974b17e41724ed13ab8369e7324c40f3e9 100644
 --- a/lib/nodes.py
 +++ b/lib/nodes.py
 @@ -127,6 +127,7 @@ def import_statistics(nodes, stats):
