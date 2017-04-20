@@ -8,7 +8,7 @@ Signed-off-by: Sven Eckelmann <sven@narfation.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/batman-adv/main.h b/net/batman-adv/main.h
-index 81c6a3829289a5c553edde9d56bfd03376035590..c54f87ad4e9b309d67748c4584f73ac1b25acca9 100644
+index 0cf9ed6be57ab9647cbf65f293dffc55ff640aea..e7041fb7766480db7fa61256b50425234914d59e 100644
 --- a/net/batman-adv/main.h
 +++ b/net/batman-adv/main.h
 @@ -118,7 +118,7 @@
