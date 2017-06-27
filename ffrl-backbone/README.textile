@@ -1,6 +1,7 @@
 h2. Assigned IPs
 
 * FFV-IPv4: 185.66.195.42/31
+* FFV-IPv4: 185.66.194.70/31 (185.66.194.71 still unused)
 * FFV-IPv6: 2a03:2260:200f::/48
 
 h2. AS
