@@ -4,7 +4,7 @@
 
     deb     http://httpredir.debian.org/debian/ stretch-backports main contrib non-free
 
-## Required packages (Debian Jessie)
+## Required packages (Debian Stretch)
 
 * alfred
 * cron
@@ -50,7 +50,7 @@ IC-VPN
 
 Some packages try to start automatically via their own init scripts. These
 have to be disabled manually to avoid conflicts with the processes started
-by the initd-ffc.sh script. The system (Debian Jessie) is by default shipped
+by the initd-ffc.sh script. The system (Debian Stretch) is by default shipped
 with systemd and thus the systemctl utility is used to modify the startup
 process
 
