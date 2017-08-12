@@ -83,7 +83,7 @@ process
 
 ## Alfred Announce
 
-    git clone https://github.com/ffnord/ffnord-alfred-announce  /opt/freifunk/ffnord-alfred-announce
+    git clone https://github.com/FreifunkVogtland/mesh-announce  /opt/freifunk/ffnord-alfred-announce
     git -C /opt/freifunk/ffnord-alfred-announce am /opt/freifunk/server-scripts/patches/ffnord-announce/*.patch
     cp respondd.service /etc/systemd/system/
     echo '* * * * *   root /opt/freifunk/ffnord-alfred-announce/announce.sh' >> /etc/cron.d/ffc
