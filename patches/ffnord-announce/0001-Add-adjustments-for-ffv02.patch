@@ -9,13 +9,6 @@ Subject: [PATCH] Add adjustments for ffv02
  respondd.service    | 2 +-
  3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/nodeinfo.d/hostname b/nodeinfo.d/hostname
-index 2730f20..188ac4e 100644
---- a/nodeinfo.d/hostname
-+++ b/nodeinfo.d/hostname
-@@ -1 +1 @@
--import_module('socket').gethostname()
-+'ffv-'+import_module('socket').gethostname()
 diff --git a/nodeinfo.d/node_id b/nodeinfo.d/node_id
 index efdd705..5f76908 100644
 --- a/nodeinfo.d/node_id
