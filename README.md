@@ -2,7 +2,7 @@
 
 ## Extra repositories
 
-    deb     http://httpredir.debian.org/debian/ jessie-backports main contrib non-free
+    deb     http://httpredir.debian.org/debian/ stretch-backports main contrib non-free
 
 ## Required packages (Debian Jessie)
 
