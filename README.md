@@ -175,6 +175,7 @@ Save secret key for FFB VPN03 under `conf/vpn03.local.key`
     git clone https://github.com/FreifunkVogtland/ffmap-backend.git /opt/freifunk/meshviewer/ffmap-backend -b maint
     touch /opt/freifunk/meshviewer/ffmap-backend/alias.json
     mkdir -p /opt/freifunk/meshviewer/ffv-nodes2eventlog/db
+    mkdir -p /opt/freifunk/meshviewer/ffv-nodes2eventlog/db-threshold60
     mkdir -p /opt/freifunk/ffv-grafana-config/dashboard/dynamic/
 
 ## IC-VPN
