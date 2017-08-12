@@ -9,13 +9,6 @@ Subject: [PATCH] Add adjustments for ffv02
  respondd.service    | 2 +-
  3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/nodeinfo.d/node_id b/nodeinfo.d/node_id
-index efdd705..5f76908 100644
---- a/nodeinfo.d/node_id
-+++ b/nodeinfo.d/node_id
-@@ -1 +1 @@
--open('/sys/class/net/' + batadv_dev + '/address').read().strip().replace(':', '')
-+open('/sys/class/net/eth0/address').read().strip().replace(':', '')
 diff --git a/respondd.service b/respondd.service
 index 1923418..550d691 100644
 --- a/respondd.service
