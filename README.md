@@ -172,6 +172,7 @@ Save secret key for FFB VPN03 under `conf/vpn03.local.key`
     git clone https://github.com/FreifunkVogtland/ffv-meshviewer-filter.git /opt/freifunk/meshviewer/ffv-meshviewer-filter
     git clone https://github.com/FreifunkVogtland/nodes2eventlog.git /opt/freifunk/meshviewer/ffv-nodes2eventlog
     git clone https://github.com/FreifunkVogtland/ffv-grafana-config.git /opt/freifunk/ffv-grafana-config
+    git clone https://github.com/FreifunkVogtland/nodelist2kml.git /opt/freifunk/meshviewer/nodelist2kml
     git clone https://github.com/FreifunkVogtland/ffmap-backend.git /opt/freifunk/meshviewer/ffmap-backend -b maint
     touch /opt/freifunk/meshviewer/ffmap-backend/alias.json
     mkdir -p /opt/freifunk/meshviewer/ffv-nodes2eventlog/db
