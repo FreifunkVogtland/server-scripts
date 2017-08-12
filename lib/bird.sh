@@ -39,19 +39,19 @@ bird_init() {
 	ip rule add from all fwmark 0x1 table 100
 	ip route add default via 127.0.0.1 table 100 metric 1024
 	
-	iptables -t nat -A POSTROUTING -o $WANIF -j MASQUERADE
-	iptables -t mangle -A FORWARD -o bb-+ -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss ! --mss 0:1240 -j TCPMSS --set-mss 1240
-	iptables -t mangle -A FORWARD -o bat0 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss ! --mss 0:1240 -j TCPMSS --set-mss 1240
+	iptables -w -t nat -A POSTROUTING -o $WANIF -j MASQUERADE
+	iptables -w -t mangle -A FORWARD -o bb-+ -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss ! --mss 0:1240 -j TCPMSS --set-mss 1240
+	iptables -w -t mangle -A FORWARD -o bat0 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss ! --mss 0:1240 -j TCPMSS --set-mss 1240
 
-	iptables -t mangle -A PREROUTING -i bat+ -j MARK --set-xmark 0x1/0xffffffff
-	iptables -t mangle -A PREROUTING -i icvpn -j MARK --set-xmark 0x1/0xffffffff
+	iptables -w -t mangle -A PREROUTING -i bat+ -j MARK --set-xmark 0x1/0xffffffff
+	iptables -w -t mangle -A PREROUTING -i icvpn -j MARK --set-xmark 0x1/0xffffffff
 
 	touch /var/tmp/bird-icvpn.conf conf/bird.ffrl.conf
 	echo "" > conf/bird-hostroute.local.conf
 	if [ -n "${BACKBONE_IPV4}" ]; then
 		echo "if net ~ ${BACKBONE_IPV4} then accept;" >> conf/bird-hostroute.local.conf
 		ip addr add "${BACKBONE_IPV4}" dev lo
-		iptables -t nat -A POSTROUTING -o bb-+ -j SNAT --to-source "$(echo "${BACKBONE_IPV4}"|sed 's/\/.*$//')"
+		iptables -w -t nat -A POSTROUTING -o bb-+ -j SNAT --to-source "$(echo "${BACKBONE_IPV4}"|sed 's/\/.*$//')"
 	fi
 }
 
