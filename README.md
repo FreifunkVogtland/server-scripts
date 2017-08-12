@@ -28,7 +28,6 @@
 
 For meshviewer:
 
-* rrdtool
 * python3-xe
 * python3-feed
 * jq
@@ -177,7 +176,6 @@ Save secret key for FFB VPN03 under `conf/vpn03.local.key`
     touch /opt/freifunk/meshviewer/ffmap-backend/alias.json
     mkdir -p /opt/freifunk/meshviewer/ffv-nodes2eventlog/db
     mkdir -p /opt/freifunk/ffv-grafana-config/dashboard/dynamic/
-    # read /opt/freifunk/meshviewer/ffv-meshviewer-filter/globalrrd.py for info how to create /opt/freifunk/meshviewer/ffv-meshviewer-filter/nodedb/
 
 ## IC-VPN
 
