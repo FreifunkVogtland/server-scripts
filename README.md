@@ -66,7 +66,7 @@ process
     ln -s /opt/freifunk/server-scripts/initd-ffc.sh /etc/init.d/ffc
     systemctl enable ffc
     echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/ffc
-    echo '* * * * *   root /opt/freifunk/server-scripts/initd-ffc.sh watchdog' >> /etc/cron.d/ffc
+    echo '* * * * *   root flock -nx /var/lock/server-scripts.lock /opt/freifunk/server-scripts/initd-ffc.sh watchdog' >> /etc/cron.d/ffc
     git clone https://github.com/FreifunkVogtland/dns-static.git /opt/freifunk/dns
     ln -s /opt/freifunk/dns/ethers /etc/ethers
 
