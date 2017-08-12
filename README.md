@@ -76,7 +76,7 @@ process
 
 ## Build of batman-adv
 
-    git clone -b maint git://git.open-mesh.org/batman-adv.git /usr/src/batman-adv
+    git clone -b maint https://github.com/FreifunkVogtland/batman-adv.git /usr/src/batman-adv
     git -C /usr/src/batman-adv am /opt/freifunk/server-scripts/patches/batman-adv/*.patch
     make -C /usr/src/batman-adv
     make -C /usr/src/batman-adv install
