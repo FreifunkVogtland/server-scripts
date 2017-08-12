@@ -160,7 +160,7 @@ Save secret key for FFB VPN03 under `conf/vpn03.local.key`
 ### Traffic statistics
 
     # be careful - this is just for an "empty" /var/www/html
-    git clone https://github.com/ambassador86/ffc-server-statistics.git /var/www/vnstat
+    git clone https://github.com/FreifunkVogtland/ffc-server-statistics.git /var/www/vnstat
     ln -s /var/www/vnstat/index.php /var/www/html/index.php
     ln -s /var/www/vnstat/stats.conf /var/www/html/stats.conf
     echo '* *     * * *   root    /var/www/vnstat/vnstat.sh' >> /etc/cron.d/ffc
