@@ -4,7 +4,7 @@ radvd_start() {
 	sleep 2
 	sed -e "s/__BIRD_ROUTER_IDV6__/${ROUTERIDV6}/g" \
 		conf/radvd.conf > conf/radvd.local.conf
-	radvd -C conf/conf/radvd.local.conf
+	radvd -C conf/radvd.local.conf
 }
 
 radvd_stop() {
