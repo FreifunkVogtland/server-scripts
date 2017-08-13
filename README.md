@@ -1,97 +1,6 @@
 # server-scripts
 
-## Extra repositories
-
-    deb     http://httpredir.debian.org/debian/ stretch-backports main contrib non-free
-
-## Required packages (Debian Stretch)
-
-* alfred
-* cron
-* dnsmasq
-* radvd
-* bird
-* bird6
-* iproute2
-* batctl
-* linux-headers-$arch
-* build-essential
-* fastd
-* git
-* procps
-* iptables
-* rsyslog
-* python3
-* ethtool
-* $MAIL_SERVER
-
-For meshviewer:
-
-* python3-xe
-* python3-feed
-* jq
-* python3-networkx
-* alfred-json
-* python3-dateutil
-* nc
-
-The vpn interface stats also require:
-
-* libapache2-mod-php5
-* vnstati
-
-IC-VPN
-
-* tinc
-* python3-yaml
-
-## Startup workarounds
-
-Some packages try to start automatically via their own init scripts. These
-have to be disabled manually to avoid conflicts with the processes started
-by the initd-ffc.sh script. The system (Debian Stretch) is by default shipped
-with systemd and thus the systemctl utility is used to modify the startup
-process
-
-    systemctl disable dnsmasq.service
-    systemctl disable bird
-    systemctl disable bird6
-
-## Checkout of the repository
-
-    mkdir -p /opt/freifunk/
-    git clone https://github.com/FreifunkVogtland/server-scripts.git /opt/freifunk/server-scripts
-    ln -s /opt/freifunk/server-scripts/initd-ffc.sh /etc/init.d/ffc
-    systemctl enable ffc
-    echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/ffc
-    echo '* * * * *   root flock -nx /var/lock/server-scripts.lock /opt/freifunk/server-scripts/initd-ffc.sh watchdog' >> /etc/cron.d/ffc
-    git clone https://github.com/FreifunkVogtland/dns-static.git /opt/freifunk/dns
-    ln -s /opt/freifunk/dns/ethers /etc/ethers
-
-## Extra configuration in /etc
-
-    echo '100     freifunk' >> /etc/iproute2/rt_tables
-
-## Build of batman-adv
-
-    git clone -b ffv/2017.0.1 https://github.com/FreifunkVogtland/batman-adv.git /usr/src/batman-adv
-    make -C /usr/src/batman-adv
-    make -C /usr/src/batman-adv install
-
-## Alfred Announce
-
-    git clone https://github.com/FreifunkVogtland/mesh-announce  /opt/freifunk/ffnord-alfred-announce
-    git -C /opt/freifunk/ffnord-alfred-announce am /opt/freifunk/server-scripts/patches/ffnord-announce/*.patch
-    cp respondd.service /etc/systemd/system/
-    echo '* * * * *   root /opt/freifunk/ffnord-alfred-announce/announce.sh' >> /etc/cron.d/ffc
-    systemctl daemon-reload
-    systemctl start respondd.service
-    systemctl enable respondd
-
-## Configuration
-
-* create new copy of `conf/general.conf` called `conf/general.local.conf`
-* remove GRE_PEERS from `conf/general.local.conf`
+The server scripts are deployed using ansible-configs.
 
 ### Selection of services
 
@@ -136,31 +45,12 @@ process
 
 Change MAIL_TO in `lib/log.sh` to send reports to the server admin. Requires working sendmail
 
-### Traffic statistics
-
-    # be careful - this is just for an "empty" /var/www/html
-    git clone https://github.com/FreifunkVogtland/ffc-server-statistics.git /var/www/vnstat
-    ln -s /var/www/vnstat/index.php /var/www/html/index.php
-    ln -s /var/www/vnstat/stats.conf /var/www/html/stats.conf
-    echo '* *     * * *   root    /var/www/vnstat/vnstat.sh' >> /etc/cron.d/ffc
-    # now adjust interfaces (usually "eth0 fastd-mesh0 fastd-mesh1 fastd-mesh2 fastd-mesh3") and wwwroot (usually "/var/www/html")
-    vi /var/www/vnstat/stats.conf
-
-### Meshviewer
-
-    mkdir -p /opt/freifunk/meshviewer/data/nodedb /var/www/meshviewer/ffv/
-    git clone https://github.com/FreifunkVogtland/ffv-api-generator.git /opt/freifunk/ffv-api-generator
-    git clone https://github.com/FreifunkVogtland/ffv-meshviewer-filter.git /opt/freifunk/meshviewer/ffv-meshviewer-filter
-    git clone https://github.com/FreifunkVogtland/nodes2eventlog.git /opt/freifunk/meshviewer/ffv-nodes2eventlog
-    git clone https://github.com/FreifunkVogtland/ffv-grafana-config.git /opt/freifunk/ffv-grafana-config
-    git clone https://github.com/FreifunkVogtland/nodelist2kml.git /opt/freifunk/meshviewer/nodelist2kml
-    git clone https://github.com/FreifunkVogtland/ffmap-backend.git /opt/freifunk/meshviewer/ffmap-backend -b maint
-    touch /opt/freifunk/meshviewer/ffmap-backend/alias.json
-    mkdir -p /opt/freifunk/meshviewer/ffv-nodes2eventlog/db
-    mkdir -p /opt/freifunk/meshviewer/ffv-nodes2eventlog/db-threshold60
-    mkdir -p /opt/freifunk/ffv-grafana-config/dashboard/dynamic/
-
 ## IC-VPN
+
+Required packages:
+
+* tinc
+* python3-yaml
 
 Required BIRD to be enabled and explanations for installation can be found
 under https://wiki.freifunk.net/IC-VPN
