@@ -119,17 +119,6 @@ process
 * WANIF
   - set it to the interface pointing towards the native uplink
 
-### native uplink settings
-
-Some address ranges can be used directly from the VPN without going through
-a server in another country. A list of these IP ranges in managed by the FFC
-API and following entries have to be added to the general.local.conf
-
-* COUNTRY
-  - usually "DE"
-* APIKEY
-  - key to access the API - can be requested from Steffen
-
 ### GRE Peers
 
 * adjust GRE_PEERS to include all peers including itself with $WANIP

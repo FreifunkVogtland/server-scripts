@@ -30,8 +30,6 @@ bird_init() {
 		fi
 	done
 
-	touch conf/bird-routes.country.conf
-
 	ip rule add from 10.204.0.0/16 lookup 100
 	ip rule add to 10.204.0.0/16 lookup 100
 	ip rule add from 185.66.195.42/31 lookup 100
@@ -71,11 +69,7 @@ bird_stop() {
 }
 
 bird_cron() {
-	if [ -n $WANGW -a -n $APIKEY ]; then
-		wget "http://api.routers.chemnitz.freifunk.net/request.php?apikey=$APIKEY&type=routing&region=$COUNTRY" -q -O conf/bird-routes.country.conf
-		sed -e "s/NEXTHOP/$WANGW/g" -i "conf/bird-routes.country.conf"
-		killall bird -s SIGHUP
-	fi
+	true
 }
 
 # Add BGP peer
