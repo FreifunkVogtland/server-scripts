@@ -12,7 +12,6 @@
 * radvd
 * bird
 * bird6
-* openvpn
 * iproute2
 * batctl
 * linux-headers-$arch
@@ -105,7 +104,6 @@ process
   - USE_DNSMASQ
   - USE_RADVD
 * uplink servers
-  - USE_VPN03
   - USE_BIRD
 * on meshviewer server
   - USE_MESHVIEWER
@@ -148,12 +146,6 @@ API and following entries have to be added to the general.local.conf
 ### Logging
 
 Change MAIL_TO in `lib/log.sh` to send reports to the server admin. Requires working sendmail
-
-### VPN03
-
-A secret key has to be registered via https://wiki.freifunk.net/Vpn03
-
-Save secret key for FFB VPN03 under `conf/vpn03.local.key`
 
 ### Traffic statistics
 
