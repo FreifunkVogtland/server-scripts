@@ -12,7 +12,6 @@ PATH=$PATH:/usr/local/sbin/
 . lib/bird.sh
 . lib/bird6.sh
 . lib/dnsmasq.sh
-. lib/radvd.sh
 . lib/direct.sh
 . lib/meshviewer.sh
 
@@ -63,7 +62,6 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_start
 	[ "$USE_BIRD" = "1" ] && (bird_start ; bird6_start)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
-	[ "$USE_RADVD" = "1" ] && radvd_start
 	
 	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
@@ -76,7 +74,6 @@ ffc_stop() {
 	bird_stop
 	bird6_stop
 	dnsmasq_stop
-	radvd_stop
 	
 	while [ 1 ]; do
 		ip rule delete lookup 100 >> /dev/null 2>&1
@@ -93,7 +90,6 @@ ffc_watchdog() {
 	
 	# Every minute
 	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_cron
-	[ "$USE_RADVD" = "1" ] &&  radvd_cron
 	[ "$USE_DNSMASQ" = "1" ] &&  dnsmasq_cron
 	
 	# Every 5 minutes

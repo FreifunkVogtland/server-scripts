@@ -11,7 +11,6 @@ The server scripts are deployed using ansible-configs.
   - USE_FASTD
   - USE_BIRD
   - USE_DNSMASQ
-  - USE_RADVD
 * uplink servers
   - USE_BIRD
 * on meshviewer server
