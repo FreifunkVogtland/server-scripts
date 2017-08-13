@@ -13,6 +13,7 @@ PATH=$PATH:/usr/local/sbin/
 . lib/bird6.sh
 . lib/dnsmasq.sh
 . lib/radvd.sh
+. lib/direct.sh
 . lib/meshviewer.sh
 
 limit_throughput() {
@@ -48,6 +49,7 @@ ffc_start() {
 	[ "$USE_FASTD" = "1" ] && fastd_init
 	[ "$USE_BIRD" = "1" ] && (bird_init ; bird6_init)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
+	[ "$USE_DIRECT" = "1" ] && direct_init
 	
 	gre_add_all_tunnels
 	
