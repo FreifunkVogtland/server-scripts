@@ -22,6 +22,8 @@ ffc_start() {
 		log_fatal_error "Own WANIP not found in GRE_PEERS - please check configuration!"
 	fi
 
+	[ ! -x /etc/rc.local.iptables ] || /etc/rc.local.iptables
+
 	gre_init
 	batman_init
 	[ "$USE_FASTD" = "1" ] && fastd_init
