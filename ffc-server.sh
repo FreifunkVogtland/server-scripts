@@ -29,7 +29,6 @@ ffc_start() {
 	[ "$USE_BIRD" = "1" ] && (bird_init ; bird6_init)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	[ "$USE_VPN03" = "1" ] && vpn03_init
-	meshviewer_init
 	
 	gre_add_all_tunnels
 	
@@ -59,7 +58,6 @@ ffc_stop() {
 	dnsmasq_stop
 	radvd_stop
 	vpn03_stop
-	meshviewer_stop
 	
 	while [ 1 ]; do
 		ip rule delete lookup 100 >> /dev/null 2>&1

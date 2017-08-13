@@ -1,13 +1,5 @@
 #!/bin/bash
 
-meshviewer_init() {
-	if [ "$USE_MESHVIEWER" = "1" ]; then
-		batman_wait_for_ll_address
-		alfred -m -i bat0 &> /dev/null &
-		batadv-vis -s &> /dev/null &
-	fi
-}
-
 # Called by watchdog
 meshviewer_cron() {
         /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --prune 14 --with-graphite --graphite-metrics 'clients,loadavg,uptime' --with-graphite --graphite-metrics 'clients,loadavg,uptime,memory_usage,rootfs_usage,traffic.rx.bytes,traffic.tx.bytes,traffic.mgmt_tx.bytes,traffic.mgmt_rx.bytes,traffic.forward.bytes' --graphite-host localhost --graphite-prefix='freifunk.nodes.'
@@ -28,8 +20,4 @@ meshviewer_cron() {
 	/opt/freifunk/meshviewer/nodelist2kml/nodelist2kml.py /var/www/meshviewer/ffv/nodelist.json /var/www/meshviewer/ffv/nodelist.kml
 
 	/opt/freifunk/ffv-grafana-config/generate-dashboards.py  /var/www/meshviewer/ffv/nodelist.json /opt/freifunk/ffv-grafana-config/dashboard-templates/ /opt/freifunk/ffv-grafana-config/dashboard/dynamic/
-}
-
-meshviewer_stop() {
-	killall alfred >> /dev/null 2>&1
 }
