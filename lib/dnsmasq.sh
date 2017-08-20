@@ -1,32 +1,19 @@
 #!/bin/bash
 
 dnsmasq_init() {
-	if [ ! -n "${ROUTERID}" ]; then
-		log_fatal_error "Missing ROUTERID address for DHCP - please check configuration!"
-	fi
-
-	sed -e "s/__DNSMASQ_SERVICE_IP__/${ROUTERID}/g" \
-		-e "s/__DNSMASQ_RANGE__/${DNSMASQ_RANGE}/g" \
-		conf/dnsmasq.conf > conf/dnsmasq.local.conf
+	true
 }
 
 dnsmasq_start() {
-	touch /var/tmp/dnsmasq-icvpn.conf
-	md5sum /var/tmp/dnsmasq-icvpn.conf > /var/tmp/dnsmasq-icvpn.conf.md5sum
-	dnsmasq -C conf/dnsmasq.local.conf
+	true
 }
 
 dnsmasq_stop() {
-	killall dnsmasq >> /dev/null 2>&1
+	true
 }
 
 # Called by watchdog
 dnsmasq_cron() {
-	pidof dnsmasq > /dev/null
-	if [[ $? -ne 0 ]] ; then
-		dnsmasq_start
-	fi
-
 	# read new hosts/ethers
 	dns_pre="$(git -C /opt/freifunk/dns/ rev-parse HEAD)"
 	git -C /opt/freifunk/dns/ pull -q
