@@ -5,10 +5,8 @@ The server scripts are deployed using ansible-configs.
 ### Selection of services
 
 * on gateways:
-  - USE_FASTD
   - USE_BIRD
 * on gateways with address distribution
-  - USE_FASTD
   - USE_BIRD
   - USE_DNSMASQ
 * uplink servers
@@ -32,13 +30,6 @@ The server scripts are deployed using ansible-configs.
 * adjust GRE_PEERS to include all peers including itself with $WANIP
 * update server scripts on other servers to add new entry
 
-
-### fastd
-
-* create key via `fastd --generate-key`
-  - save secret key to `conf/fastd-secret.local.conf` as `secret "123456789";`
-* get public key from conf/fastd-secret.local.conf and add new entry to site-ffc.git/site.conf
-  - public key can recreated from secret key via `fastd --show-key -c conf/fastd.conf`
 
 ### Logging
 

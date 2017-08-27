@@ -8,7 +8,6 @@ PATH=$PATH:/usr/local/sbin/
 . lib/log.sh
 . lib/gre.sh
 . lib/batman.sh
-. lib/fastd.sh
 . lib/bird.sh
 . lib/bird6.sh
 . lib/dnsmasq.sh
@@ -45,7 +44,6 @@ ffc_start() {
 	[ "$SHAPE_LIMIT" != "" ] && limit_throughput
 	gre_init
 	batman_init
-	[ "$USE_FASTD" = "1" ] && fastd_init
 	[ "$USE_BIRD" = "1" ] && (bird_init ; bird6_init)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	[ "$USE_DIRECT" = "1" ] && direct_init
@@ -58,8 +56,7 @@ ffc_start() {
 		echo 1 > /sys/class/net/"$i"/batman_adv/no_rebroadcast
 	done
 	batman_setup_interface
-	
-	[ "$USE_FASTD" = "1" ] && fastd_start
+
 	[ "$USE_BIRD" = "1" ] && (bird_start ; bird6_start)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 	
@@ -68,7 +65,6 @@ ffc_start() {
 
 # Destroy network
 ffc_stop() {
-	fastd_stop
 	gre_stop
 	batman_stop
 	bird_stop
