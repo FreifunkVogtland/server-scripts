@@ -16,8 +16,6 @@ The server scripts are deployed using ansible-configs.
 
 ### WAN settings
 
-* SERVICE_ADDRESSES
-  - has to be obtained from the manager of the IP address space
 * WANGW
   - set it to the next hop for IPv4 traffic towards the native uplink
 * WANGW6

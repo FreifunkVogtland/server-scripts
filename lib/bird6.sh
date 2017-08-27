@@ -20,13 +20,6 @@ bird6_init() {
 		fi
 	done
 	
-	echo -n "" > conf/bird6-routes.local.conf
-	for s in "${SERVICE_ADDRESSES[@]}"; do
-		if [ "$(bird6_check_route "$s")" ]; then
-			bird6_add_route "$s"
-		fi
-	done
-	
 	ip -6 rule add from 2a03:2260:200f::/48 lookup 100
 	ip -6 rule add to 2a03:2260:200f::/48 lookup 100
 	ip -6 rule add from all fwmark 0x1 lookup 100
@@ -39,12 +32,6 @@ bird6_init() {
 	ip6tables -t mangle -A PREROUTING -i icvpn -j MARK --set-xmark 0x1/0xffffffff
 
 	touch /var/tmp/bird6-icvpn.conf conf/bird6.ffrl.conf
-}
-
-# Check for route
-#	$1		IPv6 route
-bird6_check_route() {
-	[[ "$1" =~ ^[a-f0-9:]*/[0-9]+ ]] && echo "1"
 }
 
 bird6_start() {
@@ -66,16 +53,3 @@ bird6_add_peer() {
 		conf/bird-peers.conf >> conf/bird6-peers.local.conf
 }
 
-# Add BGP route
-# 	$1		IPv6 Route
-#	$2		Next hop (optional)
-#	$3		Next hop interface (mandatory, if $2 is selected)
-bird6_add_route() {
-	local via="\"bat0\""
-	if [ "$2" ] && [ "$3" ]; then
-		local via="$2 % $3"
-	fi
-	sed -e "s|__BIRD_ROUTE__|$1|g" \
-		-e "s/__BIRD_VIA__/$via/g" \
-		conf/bird-routes.conf >> conf/bird6-routes.local.conf
-}
