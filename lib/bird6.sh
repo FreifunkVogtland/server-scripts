@@ -14,12 +14,3 @@ bird6_init() {
 
 	touch conf/bird6.ffrl.conf
 }
-
-bird6_start() {
-	true
-}
-
-bird6_stop() {
-	true
-}
-

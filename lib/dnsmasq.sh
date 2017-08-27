@@ -1,17 +1,5 @@
 #!/bin/bash
 
-dnsmasq_init() {
-	true
-}
-
-dnsmasq_start() {
-	true
-}
-
-dnsmasq_stop() {
-	true
-}
-
 # Called by watchdog
 dnsmasq_cron() {
 	# read new hosts/ethers

@@ -21,16 +21,3 @@ bird_init() {
 		iptables -w -t nat -A POSTROUTING -o bb-+ -j SNAT --to-source "$(echo "${BACKBONE_IPV4}"|sed 's/\/.*$//')"
 	fi
 }
-
-bird_start() {
-	true
-}
-
-bird_stop() {
-	true
-}
-
-bird_cron() {
-	true
-}
-

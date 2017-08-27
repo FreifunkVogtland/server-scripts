@@ -43,9 +43,7 @@ ffc_start() {
 
 	[ "$SHAPE_LIMIT" != "" ] && limit_throughput
 	gre_init
-	batman_init
 	(bird_init ; bird6_init)
-	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	[ "$USE_DIRECT" = "1" ] && direct_init
 	
 	gre_add_all_tunnels
@@ -55,10 +53,6 @@ ffc_start() {
 		batman_add_interface "$i"
 		echo 1 > /sys/class/net/"$i"/batman_adv/no_rebroadcast
 	done
-	batman_setup_interface
-
-	(bird_start ; bird6_start)
-	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 	
 	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
@@ -66,11 +60,7 @@ ffc_start() {
 # Destroy network
 ffc_stop() {
 	gre_stop
-	batman_stop
-	bird_stop
-	bird6_stop
-	dnsmasq_stop
-	
+
 	while [ 1 ]; do
 		ip rule delete lookup 100 >> /dev/null 2>&1
 		if [ $? -gt 0 ]; then
@@ -91,7 +81,6 @@ ffc_watchdog() {
 	# Every 5 minutes
 	if [ $(($cronTime%300)) -lt 10 ]; then
 		gre_cron
-		bird_cron
 	fi
 }
 
