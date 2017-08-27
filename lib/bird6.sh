@@ -1,25 +1,6 @@
 #!/bin/bash
 
 bird6_init() {
-	sed -e "s/__BIRD_ROUTER_ID__/${ROUTERID}/g" \
-		-e "s/__BIRD_ROUTER_ASN__/${OWNASN}/g" \
-		conf/bird6.conf > conf/bird6.local.conf
-	
-	echo -n "" > conf/bird6-peers.local.conf
-	for p in "${GRE_PEERS[@]}"; do
-		local remoteHost=$(echo $p | awk -F ':' '{print $1}')
-		local remoteID=$(echo $p | awk -F ':' '{print $2}')
-		local remoteIP=$(echo $p | awk -F ':' '{print $3}')
-		if [ "$remoteHost" ] && [ "$remoteIP" ]; then
-			# Do not add ourselves as a peer
-			if [ "$remoteIP" != "$WANIP" ]; then
-				bird6_add_peer "${remoteHost}" "$remoteID"
-			fi
-		else
-			log_error "Syntax error in peer definition: ${p}"
-		fi
-	done
-	
 	ip -6 rule add from 2a03:2260:200f::/48 lookup 100
 	ip -6 rule add to 2a03:2260:200f::/48 lookup 100
 	ip -6 rule add from all fwmark 0x1 lookup 100
@@ -31,25 +12,14 @@ bird6_init() {
 	ip6tables -t mangle -A PREROUTING -i bat+ -j MARK --set-xmark 0x1/0xffffffff
 	ip6tables -t mangle -A PREROUTING -i icvpn -j MARK --set-xmark 0x1/0xffffffff
 
-	touch /var/tmp/bird6-icvpn.conf conf/bird6.ffrl.conf
+	touch conf/bird6.ffrl.conf
 }
 
 bird6_start() {
-	bird6 -c conf/bird6.local.conf
+	true
 }
 
 bird6_stop() {
-	killall bird6 >> /dev/null 2>&1
-}
-
-# Add BGP peer
-# 	$1		Hostname
-# 	$2		Peer ID
-bird6_add_peer() {
-	local ipP1="$2"
-	sed -e "s/__BIRD_REMOTE_HOST__/$1/g" \
-		-e "s/__BIRD_REMOTE_IP__/2a03:2260:200f:1337::${ipP1}/g" \
-		-e "s/__BIRD_REMOTE_ASN__/${OWNASN}/g" \
-		conf/bird-peers.conf >> conf/bird6-peers.local.conf
+	true
 }
 

@@ -44,7 +44,7 @@ ffc_start() {
 	[ "$SHAPE_LIMIT" != "" ] && limit_throughput
 	gre_init
 	batman_init
-	[ "$USE_BIRD" = "1" ] && (bird_init ; bird6_init)
+	(bird_init ; bird6_init)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_init
 	[ "$USE_DIRECT" = "1" ] && direct_init
 	
@@ -57,7 +57,7 @@ ffc_start() {
 	done
 	batman_setup_interface
 
-	[ "$USE_BIRD" = "1" ] && (bird_start ; bird6_start)
+	(bird_start ; bird6_start)
 	[ "$USE_DNSMASQ" = "1" ] && dnsmasq_start
 	
 	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
@@ -91,7 +91,7 @@ ffc_watchdog() {
 	# Every 5 minutes
 	if [ $(($cronTime%300)) -lt 10 ]; then
 		gre_cron
-		[ "$USE_BIRD" = "1" ] && bird_cron
+		bird_cron
 	fi
 }
 

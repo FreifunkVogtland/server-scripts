@@ -4,22 +4,11 @@ The server scripts are deployed using ansible-configs.
 
 ### Selection of services
 
-* on gateways:
-  - USE_BIRD
-* on gateways with address distribution
-  - USE_BIRD
-  - USE_DNSMASQ
-* uplink servers
-  - USE_BIRD
 * on meshviewer server
   - USE_MESHVIEWER
 
 ### WAN settings
 
-* WANGW
-  - set it to the next hop for IPv4 traffic towards the native uplink
-* WANGW6
-  - set it to the next hop for IPv6 traffic towards the native uplink
 * WANIF
   - set it to the interface pointing towards the native uplink
 
