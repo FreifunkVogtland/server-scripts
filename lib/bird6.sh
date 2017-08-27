@@ -1,12 +1,7 @@
 #!/bin/bash
 
 bird6_init() {
-	local ipL1=$(echo $WANIP | awk -F '.' '{print $3}')
-	local ipL2=$(echo $WANIP | awk -F '.' '{print $4}')
-	local ip6L1=$(printf '%x' $ipL1)
-	local ip6L2=$(printf '%x' $ipL2)
 	sed -e "s/__BIRD_ROUTER_ID__/${ROUTERID}/g" \
-		-e "s/__BIRD_ROUTER_IP__/fe80::ffc:${ip6L1}:${ip6L2}/g" \
 		-e "s/__BIRD_ROUTER_ASN__/${OWNASN}/g" \
 		conf/bird6.conf > conf/bird6.local.conf
 	

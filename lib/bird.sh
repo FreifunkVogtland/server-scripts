@@ -1,10 +1,7 @@
 #!/bin/bash
 
 bird_init() {
-	local ipL1=$(echo $WANIP | awk -F '.' '{print $3}')
-	local ipL2=$(echo $WANIP | awk -F '.' '{print $4}')
 	sed -e "s/__BIRD_ROUTER_ID__/${ROUTERID}/g" \
-		-e "s/__BIRD_ROUTER_IP__/169.254.${ipL1}.${ipL2}/g" \
 		-e "s/__BIRD_ROUTER_ASN__/${OWNASN}/g" \
 		conf/bird.conf > conf/bird.local.conf
 	
