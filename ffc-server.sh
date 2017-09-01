@@ -53,8 +53,6 @@ ffc_start() {
 		batman_add_interface "$i"
 		echo 1 > /sys/class/net/"$i"/batman_adv/no_rebroadcast
 	done
-	
-	sysctl -p conf/sysctl.conf >> /dev/null 2>&1
 }
 
 # Destroy network
