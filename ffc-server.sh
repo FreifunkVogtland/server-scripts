@@ -11,7 +11,6 @@ PATH=$PATH:/usr/local/sbin/
 . lib/bird.sh
 . lib/bird6.sh
 . lib/dnsmasq.sh
-. lib/direct.sh
 . lib/meshviewer.sh
 
 limit_throughput() {
@@ -39,12 +38,9 @@ ffc_start() {
 		log_fatal_error "Own WANIP not found in GRE_PEERS - please check configuration!"
 	fi
 
-	[ ! -x /etc/rc.local.iptables ] || /etc/rc.local.iptables
-
 	[ "$SHAPE_LIMIT" != "" ] && limit_throughput
 	gre_init
 	(bird_init ; bird6_init)
-	[ "$USE_DIRECT" = "1" ] && direct_init
 	
 	gre_add_all_tunnels
 	
