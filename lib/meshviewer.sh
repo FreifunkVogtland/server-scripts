@@ -7,11 +7,11 @@ meshviewer_cron() {
 	# send global count to graphite
 	NUMNODES="$(batctl o|grep '^ \* '| wc -l)"
 	echo "freifunk.global.originators $NUMNODES `date +%s`" | nc -q0 localhost 2003
-	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /opt/freifunk/meshviewer/data/nodes.json | nc -q0 localhost 2003
-	/opt/freifunk/ffv-grafana-config/graphite-clients.py /opt/freifunk/meshviewer/data/nodes.json | nc -q0 localhost 2003
+	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /var/www/meshviewer/ffv/yanic/nodes.json | nc -q0 localhost 2003
+	/opt/freifunk/ffv-grafana-config/graphite-clients.py /var/www/meshviewer/ffv/yanic/nodes.json | nc -q0 localhost 2003
 
 	# generate new files based on the json data
-	/opt/freifunk/meshviewer/ffv-meshviewer-filter/filter.py /opt/freifunk/meshviewer/data/ /var/www/meshviewer/ffv/
+	/opt/freifunk/meshviewer/ffv-meshviewer-filter/filter.py /var/www/meshviewer/ffv/yanic/ /var/www/meshviewer/ffv/
 
 	/opt/freifunk/meshviewer/ffv-nodes2eventlog/nodes2eventlog.py /var/www/meshviewer/ffv/nodes.json /opt/freifunk/meshviewer/ffv-nodes2eventlog/db /var/www/meshviewer/ffv/eventlog.atom
 	OFFLINE_THRESHOLD=60 /opt/freifunk/meshviewer/ffv-nodes2eventlog/nodes2eventlog.py /var/www/meshviewer/ffv/nodes.json /opt/freifunk/meshviewer/ffv-nodes2eventlog/db-threshold60 /var/www/meshviewer/ffv/eventlog-threshold60.atom
