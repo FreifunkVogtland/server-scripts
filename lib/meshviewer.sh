@@ -5,6 +5,7 @@ meshviewer_cron() {
         /opt/freifunk/meshviewer/ffmap-backend/backend.py -d /opt/freifunk/meshviewer/data/ --prune 14 --with-graphite --graphite-metrics 'clients,loadavg,uptime' --with-graphite --graphite-metrics 'clients,loadavg,uptime,memory_usage,rootfs_usage,traffic.rx.bytes,traffic.tx.bytes,traffic.mgmt_tx.bytes,traffic.mgmt_rx.bytes,traffic.forward.bytes' --graphite-host localhost --graphite-prefix='freifunk.nodes.'
 
 	# send global count to graphite
+	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /var/www/meshviewer/ffv/yanic/nodes.json|grep freifunk.global.offlinenodes|sed 's/freifunk\./freifunk2\./' | nc -q0 localhost 2003
 	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /var/www/meshviewer/ffv/yanic/nodes.json | nc -q0 localhost 2003
 	/opt/freifunk/ffv-grafana-config/graphite-clients.py /var/www/meshviewer/ffv/yanic/nodes.json | nc -q0 localhost 2003
 
