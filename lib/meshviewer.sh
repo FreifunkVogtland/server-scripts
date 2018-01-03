@@ -3,7 +3,6 @@
 # Called by watchdog
 meshviewer_cron() {
 	# send global count to graphite
-	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /var/www/meshviewer/ffv/yanic/nodes.json|grep freifunk.global.offlinenodes|sed 's/freifunk\./freifunk2\./' | nc -q0 localhost 2003
 	/opt/freifunk/ffv-grafana-config/graphite-nodes.py /var/www/meshviewer/ffv/yanic/nodes.json | nc -q0 localhost 2003
 	/opt/freifunk/ffv-grafana-config/graphite-clients.py /var/www/meshviewer/ffv/yanic/nodes.json | nc -q0 localhost 2003
 
