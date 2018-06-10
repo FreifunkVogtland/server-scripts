@@ -11,24 +11,6 @@ PATH=$PATH:/usr/local/sbin/
 . lib/bird6.sh
 . lib/dnsmasq.sh
 
-limit_throughput() {
-    ip link delete ifb_uplink type ifb
-    ip link add ifb_uplink type ifb
-    ip link set ifb_uplink up
-    
-    tc qdisc del dev "${WANIF}" root
-    tc qdisc add dev "${WANIF}" root handle 1: htb
-    tc filter add dev "${WANIF}" parent 1:    protocol all u32 match u32 0 0 action mirred egress redirect dev ifb_uplink
-    
-    tc qdisc del dev "${WANIF}" ingress
-    tc qdisc add dev "${WANIF}" handle ffff: ingress
-    tc filter add dev "${WANIF}" parent ffff: protocol all u32 match u32 0 0 action mirred egress redirect dev ifb_uplink
-    
-    tc qdisc del dev ifb_uplink root
-    tc qdisc add dev ifb_uplink root handle 1: htb default 1
-    tc class add dev ifb_uplink parent 1: classid 1:1 htb rate "${SHAPE_LIMIT}" ceil "${SHAPE_LIMIT}"
-}
-
 # Set up network
 ffc_start() {
 	ownid="$(gre_own_id)"
@@ -37,7 +19,6 @@ ffc_start() {
 		exit 1
 	fi
 
-	[ "$SHAPE_LIMIT" != "" ] && limit_throughput
 	gre_init
 	(bird_init ; bird6_init)
 	
