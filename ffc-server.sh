@@ -9,7 +9,6 @@ PATH=$PATH:/usr/local/sbin/
 . lib/batman.sh
 . lib/bird.sh
 . lib/bird6.sh
-. lib/dnsmasq.sh
 
 # Set up network
 ffc_start() {
@@ -43,20 +42,10 @@ ffc_stop() {
 	done
 }
 
-# Run every minute by cron.d
-ffc_watchdog() {
-	export IS_CRON="1"
-	local cronTime=$(date +%s)
-	
-	# Every minute
-	[ "$USE_DNSMASQ" = "1" ] &&  dnsmasq_cron
-}
-
 case $1 in
 	start) ffc_start ;;
 	stop) ffc_stop ;;
-	watchdog) ffc_watchdog ;;
-	*) echo "Usage: start | stop | watchdog" ;;
+	*) echo "Usage: start | stop" ;;
 esac
 
 exit 0
