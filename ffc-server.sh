@@ -5,24 +5,24 @@ PATH=$PATH:/usr/local/sbin/
 . conf/general.conf
 . conf/general.local.conf
 
-. lib/gre.sh
 . lib/bird.sh
 . lib/bird6.sh
+. lib/vxlan.sh
 
 # Set up network
 ffc_start() {
-	ownid="$(gre_own_id)"
+	ownid="$(vxlan_own_id)"
 	if [ "$ownid" = "0" ]; then
 		echo "Own WANIP not found in GRE_PEERS - please check configuration!"
 		exit 1
 	fi
 
-	gre_init
+	vxlan_init
 	(bird_init ; bird6_init)
 	
-	gre_add_all_tunnels
+	vxlan_add_all_tunnels
 	
-	local running_ifnames=$(gre_get_running_ifnames)
+	local running_ifnames=$(vxlan_get_running_ifnames)
 	for i in $running_ifnames; do
 		batctl interface add "$i"
 		echo 1 > /sys/class/net/"$i"/batman_adv/no_rebroadcast
@@ -31,7 +31,7 @@ ffc_start() {
 
 # Destroy network
 ffc_stop() {
-	gre_stop
+	vxlan_stop
 
 	while [ 1 ]; do
 		ip rule delete lookup 100 >> /dev/null 2>&1
