@@ -3,7 +3,8 @@
 # get own gre id
 gre_own_id() {
 	if [ ! ${#GRE_PEERS[@]} -gt 0 ]; then
-		log_fatal_error "Missing GRE_PEERS - please check configuration!"
+		echo "Missing GRE_PEERS - please check configuration!"
+		exit 1
 	fi
 	for p in "${GRE_PEERS[@]}"; do
 		remoteHost=$(echo $p | awk -F ':' '{print $1}')
@@ -23,7 +24,8 @@ gre_own_id() {
 
 gre_init() {
 	if [ ! "$WANIF" ] || [ ! "$WANIP" ]; then
-		log_fatal_error "Missing WANIF or WANIP - please check configuration!"
+		echo "Missing WANIF or WANIP - please check configuration!"
+		exit 1
 	fi
 }
 
@@ -63,7 +65,8 @@ gre_check_tunnel() {
 # Build GRE tunnels to remote backbone servers
 gre_add_all_tunnels() {
 	if [ ! ${#GRE_PEERS[@]} -gt 0 ]; then
-		log_fatal_error "Missing GRE_PEERS - please check configuration!"
+		echo "Missing GRE_PEERS - please check configuration!"
+		exit 1
 	fi
 	local ownID="$(gre_own_id)"
 
@@ -76,18 +79,6 @@ gre_add_all_tunnels() {
 			if [ "$remoteIP" != "$WANIP" ]; then
 				gre_add_tunnel "gre-${remoteHost}" "$remoteIP" "$ownID" "$remoteID"
 			fi
-		else
-			log_error "Syntax error in peer definition: ${p}"
-		fi
-	done
-}
-
-# Called by watchdog
-gre_cron() {
-	local running_ifnames=$(gre_get_running_ifnames)
-	for i in $running_ifnames; do
-		if [ ! "$(gre_check_tunnel "$i")" ]; then
-			log_error "GRE tunnel seems down: $i"
 		fi
 	done
 }

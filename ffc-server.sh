@@ -5,7 +5,6 @@ PATH=$PATH:/usr/local/sbin/
 . conf/general.conf
 . conf/general.local.conf
 
-. lib/log.sh
 . lib/gre.sh
 . lib/batman.sh
 . lib/bird.sh
@@ -34,7 +33,8 @@ limit_throughput() {
 ffc_start() {
 	ownid="$(gre_own_id)"
 	if [ "$ownid" = "0" ]; then
-		log_fatal_error "Own WANIP not found in GRE_PEERS - please check configuration!"
+		echo "Own WANIP not found in GRE_PEERS - please check configuration!"
+		exit 1
 	fi
 
 	[ "$SHAPE_LIMIT" != "" ] && limit_throughput
@@ -69,11 +69,6 @@ ffc_watchdog() {
 	
 	# Every minute
 	[ "$USE_DNSMASQ" = "1" ] &&  dnsmasq_cron
-	
-	# Every 5 minutes
-	if [ $(($cronTime%300)) -lt 10 ]; then
-		gre_cron
-	fi
 }
 
 case $1 in
