@@ -6,7 +6,6 @@ PATH=$PATH:/usr/local/sbin/
 . conf/general.local.conf
 
 . lib/gre.sh
-. lib/batman.sh
 . lib/bird.sh
 . lib/bird6.sh
 
@@ -25,7 +24,7 @@ ffc_start() {
 	
 	local running_ifnames=$(gre_get_running_ifnames)
 	for i in $running_ifnames; do
-		batman_add_interface "$i"
+		batctl interface add "$i"
 		echo 1 > /sys/class/net/"$i"/batman_adv/no_rebroadcast
 	done
 }
