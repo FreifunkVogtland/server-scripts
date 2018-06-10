@@ -11,7 +11,6 @@ PATH=$PATH:/usr/local/sbin/
 . lib/bird.sh
 . lib/bird6.sh
 . lib/dnsmasq.sh
-. lib/meshviewer.sh
 
 limit_throughput() {
     ip link delete ifb_uplink type ifb
@@ -69,7 +68,6 @@ ffc_watchdog() {
 	local cronTime=$(date +%s)
 	
 	# Every minute
-	[ "$USE_MESHVIEWER" = "1" ] && meshviewer_cron
 	[ "$USE_DNSMASQ" = "1" ] &&  dnsmasq_cron
 	
 	# Every 5 minutes

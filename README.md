@@ -2,11 +2,6 @@
 
 The server scripts are deployed using ansible-configs.
 
-### Selection of services
-
-* on meshviewer server
-  - USE_MESHVIEWER
-
 ### WAN settings
 
 * WANIF
