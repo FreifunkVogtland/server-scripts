@@ -2,9 +2,6 @@
 
 PATH=$PATH:/usr/local/sbin/
 
-. conf/general.conf
-. conf/general.local.conf
-
 . lib/bird.sh
 . lib/bird6.sh
 
