@@ -2,22 +2,14 @@
 
 PATH=$PATH:/usr/local/sbin/
 
-. lib/bird.sh
-. lib/bird6.sh
-
 # Set up network
 ffc_start() {
-	(bird_init ; bird6_init)
+	true
 }
 
 # Destroy network
 ffc_stop() {
-	while [ 1 ]; do
-		ip rule delete lookup 100 >> /dev/null 2>&1
-		if [ $? -gt 0 ]; then
-			break
-		fi
-	done
+	true
 }
 
 case $1 in
